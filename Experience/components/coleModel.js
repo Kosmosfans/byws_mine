@@ -4,39 +4,46 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { Color, DoubleSide, MeshBasicMaterial, MeshStandardMaterial, TextureLoader } from "three";
 
 async function loadModel() {
+    const loader = setupLoader();
+    const gltf = await loader.loadAsync('/models/mine_bake3.glb');
+    setupModel(gltf);
+    return gltf.scene;
+}
+
+function setupLoader() {
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/')
     loader.setDRACOLoader(dracoLoader);
-    const gltf = await loader.loadAsync('/models/mine_baked2.glb');
-
-    setupModel(gltf);
-
-    return gltf.scene;
+    return loader;
 }
 
 function setupModel(gltf) {
     const loader = new TextureLoader();
 
-    const texFileNames = ['bd00', 'bd01', 'bd02', 'bd03', 'bd04', 'bd05', 'bd06', 'bd07', 'bd08', 'bd09', 'bd10', 'bd11'];
-    const materials = {};
-    texFileNames.forEach(n => {
-        const texture = loader.load('/textures/' + n + '.png');
-        texture.flipY = false;
-        materials[n] = new MeshBasicMaterial({ map: texture });
-    })
-    const matGlass = new MeshBasicMaterial({ color: new Color((0xFFFFEE)) });
-    const matRoad = new MeshBasicMaterial({ color: new Color(0xa8a8a8) });
+    const textureTerrainCombined = loader.load('/textures/terrain_combined.png');
+    textureTerrainCombined.flipY = false;
+    const materialTerrainCombined = new MeshBasicMaterial({ map: textureTerrainCombined });
+
+    const textureBuildingCombined = loader.load('/textures/building_combined.png');
+    textureBuildingCombined.flipY = false;
+    const materialBuildingCombined = new MeshBasicMaterial({ map: textureBuildingCombined });
+
+    const textureTunnelCombined = loader.load('/textures/tunnel_combined.png');
+    textureTunnelCombined.flipY = false;
+    const materialTunnelCombined = new MeshBasicMaterial({ map: textureTunnelCombined });
+    materialTunnelCombined.side = DoubleSide;
+
 
     gltf.scene.traverse((node) => {
-        if (materials[node.name]) node.material = materials[node.name];
-        if (node.name === "glasses") node.material = matGlass;
-        if (node.name === "roads") node.material = matRoad;
-        if (node.name === "bd00") node.material.side = DoubleSide;
+        if (['terrain', 'roads', 'grass'].includes(node.name)) node.material = materialTerrainCombined;
+        if (['tunnel', 'frame'].includes(node.name)) node.material = materialTunnelCombined;
+        if (node.name === 'buildings') node.children.forEach(n => n.material = materialBuildingCombined);
     })
 
 
     gltf.scene.scale.set(0.2, 0.2, 0.2);
+    gltf.scene.position.set(-10, 10, 0);
 }
 
 export { loadModel };
