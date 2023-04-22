@@ -1,7 +1,7 @@
 import { DirectionalLight, AmbientLight, HemisphereLight } from 'three';
 
 function createLights() {
-    const directionalLight = new DirectionalLight('#FFFFDD', 1);
+    const directionalLight = new DirectionalLight('#FFFFFF', 0.8);
     // directionalLight.castShadow = true;
     directionalLight.position.set(-20, 40, 10);
 
@@ -13,7 +13,7 @@ function createLights() {
         directionalLight.shadow.mapSize.height = 4096;
 
     // const ambientLight = new AmbientLight('white', 0.7);
-    const ambientLight = new HemisphereLight('#FFFFFF', 'darkslategrey', 1);
+    const ambientLight = new HemisphereLight('#FFFFFF', 'darkslategrey', 0.8);
 
     return { directionalLight, ambientLight };
 }

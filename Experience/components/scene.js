@@ -5,7 +5,7 @@ function createScene() {
 
     const bgColor = '#303030';
     scene.background = new Color(bgColor);
-    // scene.fog = new Fog(bgColor, 5, 100);
+    // scene.fog = new Fog(bgColor, 5, 1000);
     return scene;
 }
 
