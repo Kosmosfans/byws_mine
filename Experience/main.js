@@ -1,4 +1,4 @@
-import { World } from "./world/World.js";
+import World from "./world/World.js";
 
 (() => {
     const container = document.querySelector("#scene-container");

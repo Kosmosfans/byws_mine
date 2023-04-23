@@ -4,16 +4,16 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { Color, DoubleSide, MeshBasicMaterial, MeshStandardMaterial, TextureLoader } from "three";
 
 let textureLookup = [
-    { mesh: 'buildings', file: '/textures/baked1.png' },
-    { mesh: 'terrain', file: '/textures/baked2.png' },
-    { mesh: 'grass', file: '/textures/baked2.png' },
+    { mesh: 'buildings', file: '/textures/baked1.jpg' },
+    { mesh: 'terrain', file: '/textures/baked2.jpg' },
+    { mesh: 'grass', file: '/textures/baked2.jpg' },
     { mesh: 'coal_layer', file: '/textures/baked3.png' },
     { mesh: 'frame', file: '/textures/baked3.png' },
 ];
 
 async function loadMineModel() {
     const loader = setupLoader();
-    const gltf = await loader.loadAsync('/models/mine_combined_bake.glb');
+    const gltf = await loader.loadAsync('/models/mine_combined.glb');
     setupModel(gltf);
     return gltf;
 }
