@@ -1,27 +1,64 @@
 body {
-  /* remove margins and scroll bars */
-  margin: 0;
-  padding: 0;
-  /*overflow: hidden;*/
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 
-  /* style text */
-  text-align: center;
-  font-size: 12px;
-  font-family: Sans-Serif;
+    text-align: center;
+    font-size: 12px;
+    font-family: Sans-Serif, serif;
 
-  /* color text */
-  color: #444;
+    /* color text */
+    color: #444;
 }
 
 #scene-container {
-  /* tell our scene container to take up the full page */
-  position: absolute;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 
-  /*
-    Set the container's background color to the same as the scene's
-    background to prevent flashing on load
-  */
-  background-color: #000;
+    background-color: #000;
+}
+
+/* Info Panel */
+
+.info-panel {
+    opacity: 1;
+    position: absolute;
+    right: -33%;
+    top: 0;
+    width: 33%;
+    max-width: 700px;
+    height: 100vh;
+    background-color: #fff;
+    color: #041676;
+    z-index: 100;
+    transition: all .3s;
+}
+
+.info-panel-image {
+    margin-top: 20px;
+    width: 90%;
+}
+
+.info-panel-dashboard {
+    margin-top: 20px;
+    width: 90%;
+}
+
+.info-panel-title {
+    padding-bottom: 1.25rem;
+}
+
+.info-panel-lead {
+    font-weight: 700;
+    padding-bottom: 1.25rem;
+}
+
+.info-panel-description {
+    padding-bottom: 2rem;
+}
+
+.info-panel-content img {
+    max-width: 100%;
+    padding-bottom: 1.25rem;
 }

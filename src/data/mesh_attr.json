@@ -1,0 +1,107 @@
+{
+  "buildings": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "office": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "garage": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "union_bd": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "dining_bd": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "other_bd": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "air_supply": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "air_tunnel": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "bump_bd": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "coal_store": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "main_entrance": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "sub_entrance": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "belt_corridor": {
+    "use_bake": true,
+    "texture": "/textures/ground_4k.jpg",
+    "interactable": true,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "underground": {
+    "use_bake": true,
+    "texture": "/textures/underground_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": true
+  },
+  "trees": {
+    "use_bake": true,
+    "texture": "/textures/tree_2k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  }
+}
