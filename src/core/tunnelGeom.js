@@ -1,12 +1,12 @@
-import tunnels from '/src/data/tunnels.json' assert { type: 'JSON' };
+import tunnels from '/src/data/tunnel_data.json' assert { type: 'JSON' };
 
 import { BufferGeometry, Float32BufferAttribute, Vector3 } from "three";
 import { convertCoordsFromGLTFToThree } from "./utils/utils.js";
 
 let positions, uvs, colors, velocities, width;
 
-export default function createTunnelGeometry(tunnelWidth) {
-    width = tunnelWidth;
+export default function createTunnelGeometry(_width) {
+    width = _width;
 
     positions = [];
     uvs = [];

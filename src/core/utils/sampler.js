@@ -1,26 +1,35 @@
-import tunnel_raw from "../../data/tunnels.json";
-import { convertCoordsFromGLTFToThree, rand, randInt } from "./utils.js";
+import tunnel_raw from "../../data/tunnel_data.json";
+import { binarySearch, convertCoordsFromGLTFToThree, rand, len } from "./utils.js";
 import { Vector3 } from "three";
 
 const tunnels = [...Object.values(tunnel_raw)];
+const lengths = tunnels.map(t => len(t.start, t.end));
+const cumuLengths = lengths.map((sum => v => sum += v)(0));
 
 export function sampleTunnel() {
-    const idx = randInt(tunnels.length);
+    const idx = randomTunnel();
     const prop = rand();
-    const pos = getPosition(idx, prop);
+    const pos = calcPosition(idx, prop);
 
     return { tunnelIdx: idx, proportion: prop, position: pos };
 }
 
-export function getPosition(tunnelIdx, proportion) {
-    const v1 = new Vector3(tunnels[tunnelIdx].start.x, tunnels[tunnelIdx].start.y, tunnels[tunnelIdx].start.z);
-    const v2 = new Vector3(tunnels[tunnelIdx].end.x, tunnels[tunnelIdx].end.y, tunnels[tunnelIdx].end.z);
-    v1.lerp(v2, proportion);
-    return convertCoordsFromGLTFToThree(v1);
+function randomTunnel() {
+    const max = tunnels.length - 1;
+    const val = rand() * cumuLengths[max];
+    return binarySearch(cumuLengths, val, 0, max);
 }
 
-export function tunnelDiff(tunnelIdx) {
-    const v1 = new Vector3(tunnels[tunnelIdx].start.x, tunnels[tunnelIdx].start.y, tunnels[tunnelIdx].start.z);
-    const v2 = new Vector3(tunnels[tunnelIdx].end.x, tunnels[tunnelIdx].end.y, tunnels[tunnelIdx].end.z);
-    return convertCoordsFromGLTFToThree(v2.sub(v1));
+export function calcPosition(tunnelIndex, proportion) {
+    const t = tunnels[tunnelIndex];
+    const a = new Vector3(t.start.x, t.start.y, t.start.z);
+    const b = new Vector3(t.end.x, t.end.y, t.end.z);
+    return convertCoordsFromGLTFToThree(a.lerp(b, proportion));
+}
+
+export function tunnelDirection(tunnelIndex) {
+    const t = tunnels[tunnelIndex];
+    const a = new Vector3(t.start.x, t.start.y, t.start.z);
+    const b = new Vector3(t.end.x, t.end.y, t.end.z);
+    return convertCoordsFromGLTFToThree(b.sub(a));
 }

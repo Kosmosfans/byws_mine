@@ -1,6 +1,6 @@
 import { Raycaster, Vector2 } from "three";
 import MESH_ATTR from '/src/data/mesh_attr.json' assert { type: 'JSON' };
-import Highlight from "../components/Highlight.js";
+import Highlight from "../core/Highlight.js";
 import initCallout from "../components/callouts";
 
 let camera, scene, callout, highlighter;
@@ -8,11 +8,10 @@ let mouse, rayCaster, currentPick;
 let needCheck, intractable;
 
 class Interaction {
-    constructor(_camera, _scene, _callout, _highlighter) {
+    constructor(_camera, _scene, _callout) {
         camera = _camera;
         scene = _scene;
         callout = _callout;
-        highlighter = _highlighter;
 
         init();
     }
@@ -25,7 +24,7 @@ function init() {
     rayCaster = new Raycaster();
 
     findInteractableMeshes();
-    highlighter.setHighlightable(intractable);
+    highlighter = new Highlight(intractable);
     setupListeners();
 }
 
@@ -85,8 +84,7 @@ function onClick() {
 
 export default function initInteraction(world) {
     const callout = initCallout(world);
-    const highlight = new Highlight();
-    const interaction = new Interaction(world.camera, world.scene, callout, highlight);
+    const interaction = new Interaction(world.camera, world.scene, callout);
 
     world.registerUpdatable(interaction);
 }

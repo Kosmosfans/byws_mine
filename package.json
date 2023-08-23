@@ -11,6 +11,7 @@
   "devDependencies": {
     "three": "^0.151.3",
     "vite": "^4.2.0",
-    "vite-plugin-glsl": "^1.1.2"
+    "vite-plugin-glsl": "^1.1.2",
+    "camera-controls": "^2.7.0"
   }
 }

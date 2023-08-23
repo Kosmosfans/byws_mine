@@ -7,7 +7,12 @@ class Loop {
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
-        this.updatables = [];
+        this.updatables = new Set();
+
+        document.addEventListener("visibilitychange", () => {
+            document.visibilityState !== "visible" ? this.stop() : this.start();
+        });
+
     }
 
     start() {
@@ -19,7 +24,7 @@ class Loop {
     }
 
     registerUpdatable(obj) {
-        this.updatables.push(obj);
+        this.updatables.add(obj);
     }
 
     #tick() {

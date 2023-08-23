@@ -1,14 +1,15 @@
 import { Object3D, Vector3 } from "three";
 import personnelMesh from "./personnelMesh.js";
 import { outside, rand, randInt } from "./utils/utils.js";
-import { sampleTunnel, tunnelDiff } from "./utils/sampler.js";
+import { sampleTunnel, tunnelDirection } from "./utils/sampler.js";
 
 let _mesh, data, dummy;
 const roaming = new Map();
 
 export default class Personnel {
-    constructor(instructions) {
-        initMesh(instructions);
+    constructor(_data) {
+        data = _data;
+        initMesh();
         dataDriven();
     }
 
@@ -18,79 +19,73 @@ export default class Personnel {
 
     tick(delta) {
         _mesh.material.uniforms.uTime.value += delta;
-        roam();
+        animate();
     }
 }
 
-function initMesh(_data) {
-    data = _data;
+function initMesh() {
     _mesh = personnelMesh(data.length);
     dummy = new Object3D();
 
     data.forEach((v, i) => move(i, v.position));
 }
 
-function roam() {
-    for (let [idx, info] of roaming) {
-        const person = data[idx];
-        person.position.add(info.increment);
-        person.proportion += info.delta;
+function animate() {
+    for (let [i, info] of roaming) {
+        data[i].position.add(info.increment);
+        move(i, data[i].position);
 
-        if (outside(person.proportion, 0, 1)) info.delta = -info.delta;
-        if (outside(person.proportion, 0, 1)) info.increment.multiplyScalar(-1);
+        if (--info.life < 0) roaming.delete(i);
 
-        move(idx, person.position);
+        data[i].proportion += info.speed;
+        if (!outside(data[i].proportion, 0, 1)) continue;
 
-        if (--info.life < 0) roaming.delete(idx);
+        info.speed = -info.speed;
+        info.increment.multiplyScalar(-1);
     }
 
     _mesh.instanceMatrix.needsUpdate = true;
 }
 
-function move(index, pos) {
+function move(i, pos) {
     dummy.position.set(pos.x, pos.y, pos.z);
     dummy.updateMatrix();
-    _mesh.setMatrixAt(index, dummy.matrix);
+    _mesh.setMatrixAt(i, dummy.matrix);
 }
 
-function update(indices) {
-    indices.forEach(index => simulateActions(index));
+function updatePersonStatus(personList) {
+    personList.forEach(i => makeRandomAction(i));
     _mesh.instanceMatrix.needsUpdate = true;
 }
 
-function simulateActions(i) {
-    const flag = data[i].inactive;
-    flag ? (rand() > 0.8 ? activate(i) : {}) : (rand() > 0.8 ? deactivate(i) : setupRoam(i));
+function makeRandomAction(i) {
+    data[i].inactive ? (rand() > 0.8 ? activate(i) : {}) : (rand() > 0.8 ? deactivate(i) : roam(i));
     move(i, data[i].position);
 }
 
-function activate(idx) {
+function activate(i) {
     const sample = sampleTunnel();
-    data[idx].tunnelIdx = sample.tunnelIdx;
-    data[idx].proportion = sample.proportion;
-    data[idx].position = sample.position;
-    data[idx].inactive = false;
+    data[i].tunnelIdx = sample.tunnelIdx;
+    data[i].proportion = sample.proportion;
+    data[i].position = sample.position;
+    data[i].inactive = false;
 }
 
-function deactivate(idx) {
-    data[idx].position = new Vector3(0, -9999, 0);
-    data[idx].inactive = true;
+function deactivate(i) {
+    data[i].position = new Vector3(0, -9999, 0);
+    data[i].inactive = true;
 
-    roaming.delete(idx);
+    roaming.delete(i);
 }
 
-function setupRoam(idx) {
-    const delta = rand() * 0.002;
-    const increment = tunnelDiff(data[idx].tunnelIdx).multiplyScalar(delta);
-    const frames = randInt(800);
+function roam(i) {
+    const speed = rand() * 0.001;
+    const increment = tunnelDirection(data[i].tunnelIdx).multiplyScalar(speed);
+    const life = randInt(800);
 
-    const target = {};
-    target.delta = delta;
-    target.increment = increment;
-    target.life = frames;
-    roaming.set(idx, target);
+    roaming.set(i, { 'speed': speed, 'increment': increment, 'life': life });
 }
 
 function dataDriven() {
-    document.addEventListener("personnel_update", (e) => update(e.detail.data));
+    document.addEventListener("personnel_update", e => updatePersonStatus(e.detail.data));
 }

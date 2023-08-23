@@ -4,7 +4,7 @@ varying vec2 vUv;
 varying vec3 vColor;
 varying float vSpeed;
 
-const float cols = 3.;
+const float cols = 6.;
 const float rows = 4.;
 const float percentage = 0.08;
 const float alpha = 0.7;

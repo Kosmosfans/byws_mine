@@ -6,9 +6,9 @@ let chart, titles;
 
 export default class Callout {
     constructor(camera) {
-        loadTitles();
+        initTitles();
         chart = new CalloutChart(camera);
-        clear();
+        this.clear();
     }
 
     get mesh() {
@@ -21,17 +21,13 @@ export default class Callout {
     }
 
     clear() {
-        clear();
+        chart.mesh.visible = false;
+        chart.mesh.position.set(-1000, 0, 0);
     }
 
     tick(delta) {
         if (chart.mesh.visible) chart.tick(delta);
     }
-}
-
-function clear() {
-    chart.mesh.visible = false;
-    chart.mesh.position.set(-1000, 0, 0);
 }
 
 function setTitle(name) {
@@ -46,7 +42,7 @@ function showOn(target) {
     chart.mesh.visible = true;
 }
 
-function loadTitles() {
+function initTitles() {
     titles = new Map();
     Object.keys(MESH_ATTR).filter(k => MESH_ATTR[k]["interactable"]).forEach(f => loadTitle(f));
 }

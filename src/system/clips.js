@@ -4,22 +4,16 @@ class Clips {
     constructor(gltf) {
         this.mixer = new AnimationMixer(gltf.scene);
         this.animations = gltf.animations.filter(n => n.name.endsWith('Action'));
-
-        this.playClips();
     }
 
-    playClips() {
-        this.animations.forEach(clip => this.mixer.clipAction(clip).play());
-    }
+    playAll = () => this.animations.forEach(clip => this.mixer.clipAction(clip).play());
 
-    tick(delta) {
-        this.mixer.update(delta);
-    }
+    tick = (delta) => this.mixer.update(delta);
 }
 
 export default function initClips(world) {
     const clips = new Clips(world.gltf);
-    clips.playClips();
+    clips.playAll();
 
     world.registerUpdatable(clips);
     return clips;

@@ -1,4 +1,4 @@
-import tunnel_raw from '/src/data/tunnels.json' assert { type: 'JSON' };
+import tunnel_raw from '/src/data/tunnel_data.json' assert { type: 'JSON' };
 import { rand, randInt, range } from "../core/utils/utils.js";
 
 const count = Object.keys(tunnel_raw).length;

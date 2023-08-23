@@ -1,27 +1,29 @@
 import { data } from "./data.js";
 
-const targets = [
+// ----- realtime data simulator ------
+
+const generators = [
     { type: 'air_update', elapsed: 0, interval: 0.53 },
-    { type: 'personnel_update', elapsed: 0, interval: 0.451 },
+    { type: 'personnel_update', elapsed: 0, interval: 0.951 },
+    { type: 'conveyor_update', elapsed: 0, interval: 2.4},
+    { type: 'tram_update', elapsed: 0, interval: 4.4},
 ];
 
 class Triggers {
-    tick(delta) {
-        targets.forEach(target => targetTick(target, delta));
-    }
+    tick = (delta) => generators.forEach(target => dataGeneratorTick(target, delta));
 }
 
-function targetTick(target, delta) {
-    target.elapsed += delta;
-    if (target.elapsed < target.interval) return;
+function dataGeneratorTick(generator, delta) {
+    generator.elapsed += delta;
+    if (generator.elapsed < generator.interval) return;
 
-    fireEvent(target.type);
-    target.elapsed -= target.interval;
+    genData(generator.type);
+    generator.elapsed -= generator.interval;
 }
 
-function fireEvent(type) {
-    const event = new CustomEvent(type, { detail: { 'data': data[type]() } });
-    document.dispatchEvent(event);
+function genData(type) {
+    const d = { 'data': data[type]() };
+    document.dispatchEvent(new CustomEvent(type, { detail: d }));
 }
 
 export default function initTriggers(world) {

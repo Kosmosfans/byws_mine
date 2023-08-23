@@ -1,4 +1,4 @@
-import { PerspectiveCamera, OrthographicCamera } from 'three';
+import { OrthographicCamera, PerspectiveCamera } from 'three';
 
 export default function createCamera() {
     return createOrthographicCamera();
@@ -6,11 +6,7 @@ export default function createCamera() {
 }
 
 function createOrthographicCamera() {
-    const camera = new OrthographicCamera(-1, -1, 1, 1, 0.5, 1000);
-    camera.position.set(124, 110, 140);
-    camera.zoom = 9.2;
-
-    return camera;
+    return new OrthographicCamera(-1, -1, 1, 1, 0.5, 1000);
 }
 
 function createPerspectiveCamera() {

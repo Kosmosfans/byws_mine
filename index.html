@@ -2,32 +2,39 @@
 <html lang="en">
 
 <head>
-  <title>DD Model</title>
+    <title>DD Model</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
 
-  <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="src/style.css" rel="stylesheet" type="text/css">
 
-  <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/main.js"></script>
 </head>
 
 <body>
-  <div id="scene-container"></div>
+    <div id="scene-container"></div>
 
-  <!-- Info Panels  -->
-  <div class="info-panel">
-    <div class="info-panel-content">
-      <div class="info-panel-content-wrapper">
-        <img class="info-panel-image" src="/images/dummy_building.jpg" alt="">
-        <img class="info-panel-logo" src="" alt="">
-        <h2 class="info-panel-title">综合办公楼</h2>
-        <img class="info-panel-dashboard" src="/images/dummy_dashboard.jpg" alt="">
-        <p class="info-panel-lead"></p>
-        <p class="info-panel-description"></p>
-      </div>
+    <div id="module_menu">
+        <button class="button module" id="module_button_1"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"> <g> <path d="M352.57 128c-28.09 0-54.09 4.52-77.06 12.86l12.41-123.11C289 7.31 279.81-1.18 269.33.13 189.63 10.13 128 77.64 128 159.43c0 28.09 4.52 54.09 12.86 77.06L17.75 224.08C7.31 223-1.18 232.19.13 242.67c10 79.7 77.51 141.33 159.3 141.33 28.09 0 54.09-4.52 77.06-12.86l-12.41 123.11c-1.05 10.43 8.11 18.93 18.59 17.62 79.7-10 141.33-77.51 141.33-159.3 0-28.09-4.52-54.09-12.86-77.06l123.11 12.41c10.44 1.05 18.93-8.11 17.62-18.59-10-79.7-77.51-141.33-159.3-141.33zM256 288a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path></g> </svg></button>
+        <button class="button module" id="module_button_2"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><path class="st0" d="M332.933,213.451c-20.713,17.784-47.559,28.624-76.938,28.624c-29.37,0-56.224-10.84-76.928-28.624 c-54.991,20.952-92.686,66.126-92.686,132.094v98.082c0,0,14.505,19.331,45.864,37.437v-69.339h28.992v83.228 c24.848,9.78,56.243,17.047,94.758,17.047c38.524,0,69.901-7.266,94.767-17.047v-83.228h28.992v69.339 c31.359-18.106,45.864-37.437,45.864-37.437v-98.082C425.618,279.577,387.923,234.403,332.933,213.451z"></path> <path class="st0" d="M255.996,213.902c49.299,0,89.26-39.96,89.26-89.259V89.269C345.255,39.96,305.294,0,255.996,0 c-49.3,0-89.268,39.96-89.268,89.269v35.374C166.727,173.942,206.696,213.902,255.996,213.902z"></path> </g></svg></button>
+        <button class="button module" id="module_button_3"><svg class="svg-icon" viewBox="0 0 300 300" focusable="false"><g>  <g> <path d="M6.186,96.564C2.309,99.288,0,103.73,0,108.469v118.719c0,6.065,3.763,11.495,9.441,13.624l94.548,35.457l28.541-118.973 L107.223,25.579L6.186,96.564z"></path> <path d="M299.983,217.783L257.96,88.866l-97.576,77.063l-27.019,112.636l156.573-42.225c3.853-1.038,7.108-3.613,9.007-7.122 S301.22,221.576,299.983,217.783z"></path> <polygon points="238.882,66.852 136.193,22.135 157.182,131.377 "></polygon> </g> </g></svg></button>
+        <button class="button module" id="module_button_4"><svg class="svg-icon" viewBox="0 0 32 32" focusable="false"><g> <path d="m31 6v20h-4c0 1.6568542-1.3431458 3-3 3s-3-1.3431458-3-3h-10c0 1.6568542-1.34314575 3-3 3s-3-1.3431458-3-3h-4v-20zm-22 6h-4v7h4zm6 0h-4v7h4zm6 0h-4v7h4zm6 0h-4v7h4z"></path> </g></svg></button>
+        <button class="button module" id="module_button_5"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon class="st0" points="352.188,0 131.781,290.125 224.172,290.125 148.313,512 380.219,223.438 284.328,223.438 "></polygon></g></svg></button>
+        <button class="button module" id="module_button_6"><svg class="svg-icon" viewBox="0 0 32 32" focusable="false"><g> <path d="M25.378 19.75c1.507 6.027-3.162 11.25-9.375 11.25s-10.9-5.149-9.375-11.25c0.937-3.75 5.625-9.375 9.375-18.75 3.75 9.374 8.438 15 9.375 18.75z"></path></g></svg></button>
+        <button class="button module" id="module_button_7"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g>  <path class="st0" d="M487.936,316.151l-27.71-77.218c-5.112-14.258-17.159-24.91-31.929-28.244l-4.86-1.098 c-0.313-0.069-0.626-0.138-0.939-0.206l-126.794-25.772c-6.584-1.335-13.381-1.16-19.89,0.519l-50.102,12.932 c-6.554,1.694-13.412,1.854-20.043,0.481l-11.841-2.45c-6.431-1.335-13.076-1.213-19.455,0.336l-89.776,21.836 c-13.802,3.365-25.155,13.13-30.526,26.284l-29.678,72.602H0v13.123h512v-13.123H487.936z M83.742,300.556l-5.18,15.595h-25.2 l8.598-18.875l33.005-41.024l21.782-7.385L83.742,300.556z M209.803,275.944l-18.478,29.541l-1.945,10.666h-60.037l5.882-21.332 l12.535-11.49l17.815-38.56l40.924-14.77l-14.519,21.332l-17.815,44.304l27.054-27.078l13.206-27.077l9.232-6.561L209.803,275.944z M333.218,246.402l-23.766,47.593v22.156h-40.17l10.483-25.436l24.414-41.024l35.637-19.692L333.218,246.402z M397.71,316.151 l-6.409-27.901l3.952-36.102l13.2,29.541l13.313,34.462H397.71z"></path> </g></svg></button>
+        <button class="button module" id="module_button_8"><svg class="svg-icon" viewBox="-70 -70 460 460" focusable="false"><g><polygon id="Close" points="328.96 30.2933333 298.666667 1.42108547e-14 164.48 134.4 30.2933333 1.42108547e-14 1.42108547e-14 30.2933333 134.4 164.48 1.42108547e-14 298.666667 30.2933333 328.96 164.48 194.56 298.666667 328.96 328.96 298.666667 194.56 164.48"/></g></svg></button>
     </div>
-  </div>
-</body>
 
+    <div id="camera_menu">
+        <svg class="svg-label" viewBox="0 0 24 24" focusable="false" transform="matrix(-1, 0, 0, 1, 0, 0)"><g><path d="M18.15,4.94A2.09,2.09,0,0,0,17,5.2l-8.65,5a2,2,0,0,0-.73,2.74l1.5,2.59a2,2,0,0,0,2.73.74l1.8-1a2.49,2.49,0,0,0,1.16,1V18a2,2,0,0,0,2,2H22V18H16.81V16.27A2.49,2.49,0,0,0,18,12.73l2.53-1.46a2,2,0,0,0,.74-2.74l-1.5-2.59a2,2,0,0,0-1.59-1M6.22,13.17,2,13.87l.75,1.3,2,3.46.75,1.3,2.72-3.3Z"></path> </g></svg>
+        <button class="button camera" id="camera_button_1"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon class="st0" points="256,381.424 104.628,328.845 0,365.186 256,454.114 512,365.186 407.373,328.845 	"/><polygon class="st0" points="256,272.235 104.628,219.655 0,255.996 256,344.924 512,255.996 407.373,219.655 	"/><polygon class="st0" points="512,146.806 256,57.886 0,146.806 256,235.734 "/></g></svg></button>
+        <button class="button camera" id="camera_button_2"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon points="512,146.806 256,57.886 0,146.806 256,235.734  " id="polygon3" /></g></svg></button>
+        <button class="button camera" id="camera_button_3"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon points="256,57.886 0,146.806 256,235.734 512,146.806 " id="polygon3" transform="translate(0,134.50847)" />	</g></svg></button>
+        <button class="button camera" id="camera_button_4"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon points="256,57.886 0,146.806 256,235.734 512,146.806 " id="polygon3" transform="translate(7.4576272e-8,269.01695)" /></g></svg></button>
+        <button class="button camera" id="camera_button_5"><svg class="svg-icon" viewBox="0 0 16 16" focusable="false"><g> <path d="m 2 1 c -0.554688 0 -1 0.445312 -1 1 v 4 c 0 0.554688 0.445312 1 1 1 h 4 c 0.554688 0 1 -0.445312 1 -1 v -4 c 0 -0.554688 -0.445312 -1 -1 -1 z m 8 0 c -0.554688 0 -1 0.445312 -1 1 v 4 c 0 0.554688 0.445312 1 1 1 h 4 c 0.554688 0 1 -0.445312 1 -1 v -4 c 0 -0.554688 -0.445312 -1 -1 -1 z m -8 8 c -0.554688 0 -1 0.445312 -1 1 v 4 c 0 0.554688 0.445312 1 1 1 h 4 c 0.554688 0 1 -0.445312 1 -1 v -4 c 0 -0.554688 -0.445312 -1 -1 -1 z m 8 0 c -0.554688 0 -1 0.445312 -1 1 v 4 c 0 0.554688 0.445312 1 1 1 h 4 c 0.554688 0 1 -0.445312 1 -1 v -4 c 0 -0.554688 -0.445312 -1 -1 -1 z m 0 0"></path></g></svg></button>
+        <button class="button camera" id="camera_button_6"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g><polygon class="st0" points="256,381.424 104.628,328.845 0,365.186 256,454.114 512,365.186 407.373,328.845 	"/><polygon class="st0" points="256,272.235 104.628,219.655 0,255.996 256,344.924 512,255.996 407.373,219.655 	"/><polygon class="st0" points="512,146.806 256,57.886 0,146.806 256,235.734 "/></g></svg></button>
+    </div>
+
+</body>
 </html>

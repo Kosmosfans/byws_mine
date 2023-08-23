@@ -2,13 +2,13 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import MESH_ATTR from '/src/data/mesh_attr.json' assert { type: 'JSON' };
 
-import { MeshBasicMaterial, TextureLoader } from "three";
+import { Mesh, MeshBasicMaterial, TextureLoader } from "three";
 
 let gltf, materials;
 
 export default async function loadMineModel(world) {
     const loader = setupLoader();
-    gltf = await loader.loadAsync('/models/byws_all_unlit.glb');
+    gltf = await loader.loadAsync('/models/byws_all_unlit2.glb');
     setupModel();
 
     world.add(gltf.scene);
@@ -59,8 +59,8 @@ function createMaterial(f) {
 }
 
 function assignMaterial(mesh) {
-    mesh.type === 'Group' ? mesh.children.forEach(m => assignMaterial(m)) : {};
+    if (!(mesh instanceof Mesh)) return;
 
-    const attributes = MESH_ATTR[mesh.name] || {};
-    if (attributes.use_bake) mesh.material = materials.get(attributes.texture);
+    const attr = MESH_ATTR[mesh.name] || {};
+    if (attr.use_bake) mesh.material = materials.get(attr.texture);
 }

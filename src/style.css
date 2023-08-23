@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    text-align: center;
+    font-size: 12px;
+    font-family: Sans-Serif, serif;
+
+    /* color text */
+    color: #444;
+}
+
+#scene-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #000;
+}
+
+/* buttons */
+#module_menu {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+
+}
+
+#camera_menu {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    /*border: 1px white solid;*/
+}
+
+.button {
+    position: relative;
+    border: none;
+    width: 24px;
+    height: 24px;
+    margin: 1px;
+
+    font-size: 11px;
+
+    color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    transition: background .3s;
+}
+.button:hover {
+    color: #181818;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.button:active {
+    top:0.08em;
+}
+.selected {
+    color: #181818;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.svg-icon {
+    pointer-events: none;
+    padding-top: 3px;
+    fill: currentColor;
+}
+
+.svg-label {
+    position: relative;
+    vertical-align: bottom;
+    padding-bottom: 5px;
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+
+    fill: rgba(255, 255, 255, 0.2);
+}

@@ -1,14 +1,10 @@
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Mesh } from "three";
 import { cloud_material } from "./shaderMaterials.js";
-import { Colors } from "./Colors.js";
+import { palette1 } from "./palettes.js";
 import { range } from "./utils/utils.js";
 
-const DEFAULT_WIDTH = 0.2;
-const DEFAULT_MATERIAL = cloud_material;
-const DEFAULT_SCHEME = Colors.SCHEME1;
-
-let _mesh, scheme, material, width;
+let _mesh, palette, material, width;
 
 export default class AirFlow {
     constructor(data, settings = {}) {
@@ -19,17 +15,17 @@ export default class AirFlow {
         return _mesh;
     }
 
-    tick = (delta) => _mesh.material.uniforms.uTime.value += delta;
-
+    tick = delta => update(delta);
 }
 
 function init(data, settings) {
-    width = settings['width'] || DEFAULT_WIDTH;
-    material = settings['material'] || DEFAULT_MATERIAL;
-    scheme = settings['scheme'] || DEFAULT_SCHEME;
+    width = settings['width'] || 0.2;
+    material = settings['material'] || cloud_material;
+    palette = settings['palette'] || palette1;
 
     _mesh = createMesh();
-    update(data);
+
+    updateAttributes(data);
     dataDriven();
 }
 
@@ -38,17 +34,19 @@ function createMesh() {
     return new Mesh(geom, material);
 }
 
-function update(data) {
-    data.forEach(info => updateAttributes(info));
-
-    _mesh.geometry.attributes.speed.needsUpdate = true;
-    _mesh.geometry.attributes.color.needsUpdate = true;
+function update(delta) {
+    _mesh.material.uniforms.uTime.value += delta;
 }
 
 
-function updateAttributes(info) {
-    updateVelocity(info);
-    updateColor(info);
+function updateAttributes(data) {
+    data.forEach(d => {
+        updateVelocity(d);
+        updateColor(d);
+    });
+
+    _mesh.geometry.attributes.speed.needsUpdate = true;
+    _mesh.geometry.attributes.color.needsUpdate = true;
 }
 
 function updateVelocity(info) {
@@ -57,16 +55,16 @@ function updateVelocity(info) {
 }
 
 function updateColor(info) {
-    const color = scheme.getColor(info.speed, info.warning, info.inactive);
+    const color = palette.getColor(info.speed, info.warning, info.inactive);
 
     // 6 vertices per tunnel, 3 color components per vertex
     range(6).forEach(j => {
-        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3] = color.r;
-        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3 + 1] = color.g;
-        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3 + 2] = color.b;
+        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3] = color[0];
+        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3 + 1] = color[1];
+        _mesh.geometry.attributes.color.array[info.index * 18 + j * 3 + 2] = color[2];
     });
 }
 
 function dataDriven() {
-    document.addEventListener("air_update", (e) => update(e.detail.data));
+    document.addEventListener("air_update", e => updateAttributes(e.detail.data));
 }

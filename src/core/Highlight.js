@@ -1,9 +1,9 @@
 import { Mesh } from "three";
-import { highlight_material } from "../core/shaderMaterials.js";
+import { highlight_material } from "./shaderMaterials.js";
 
 let masks;
 export default class Highlight {
-    setHighlightable(meshes) {
+    constructor(meshes) {
         masks = new Map();
         meshes.forEach((m) => createMask(m));
     }

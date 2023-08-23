@@ -24,5 +24,5 @@ function personInfo() {
 }
 
 export function personnelUpdate() {
-    return range(10).map(() => randInt(COUNT));
+    return new Set(range(10).map(() => randInt(COUNT)));
 }
