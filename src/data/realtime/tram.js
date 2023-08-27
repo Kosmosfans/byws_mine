@@ -1,4 +1,4 @@
-import { clamp, outside, rand } from "../core/utils/utils.js";
+import { clamp, outside, rand } from "../../core/utils/utils.js";
 
 let prop = 0, dir = 1;
 

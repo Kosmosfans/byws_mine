@@ -1,5 +1,5 @@
-import { rand, randInt, range } from "../core/utils/utils.js";
-import { sampleTunnel } from "../core/utils/sampler.js";
+import { rand, randInt, range } from "../../core/utils/utils.js";
+import { sampleTunnel } from "../../core/utils/sampler.js";
 import { Vector3 } from "three";
 
 const COUNT = 200;

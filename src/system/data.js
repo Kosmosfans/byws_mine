@@ -1,7 +1,8 @@
-import { airInit, airUpdate } from "../data/air_data.js";
-import { personnelInit, personnelUpdate } from "../data/personnel_data.js";
-import { conveyorUpdate } from "../data/conveyor_data.js";
-import { tramUpdate } from "../data/tram_data.js";
+import { airInit, airUpdate } from "../data/realtime/air.js";
+import { personnelInit, personnelUpdate } from "../data/realtime/personnel.js";
+import { conveyorUpdate } from "../data/realtime/conveyor.js";
+import { tramUpdate } from "../data/realtime/tram.js";
+import { seismicUpdate } from "../data/realtime/seismic.js";
 
 
 export const data = {
@@ -14,4 +15,6 @@ export const data = {
     'conveyor_update': conveyorUpdate,
 
     'tram_update': tramUpdate,
+
+    'seismic_update': seismicUpdate,
 }

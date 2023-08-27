@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import MESH_ATTR from '/src/data/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/data/static/mesh_attr.json' assert { type: 'JSON' };
 
 import { Mesh, MeshBasicMaterial, TextureLoader } from "three";
 
@@ -8,7 +8,7 @@ let gltf, materials;
 
 export default async function loadMineModel(world) {
     const loader = setupLoader();
-    gltf = await loader.loadAsync('/models/byws_all_unlit2.glb');
+    gltf = await loader.loadAsync('/models/byws_all_unlit.glb');
     setupModel();
 
     world.add(gltf.scene);

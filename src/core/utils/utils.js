@@ -22,6 +22,10 @@ export function range(a) {
     return [...Array(a).keys()];
 }
 
+export function randRange(a, b) {
+    return a + rand() * (b - a);
+}
+
 export function reflect(a) {
     a = a < 0 ? -a : a;
     a = a > 1 ? 2 - a : a;
@@ -55,4 +59,11 @@ export function randArray(len, max) {
     const result = [];
     for (let i = 0; i < len; i++) result.push((rand() - 0.5) * max);
     return result;
+}
+
+export function distance(a, b) {
+    const dx = a.x - b.x;
+    const dy = a.y - b.y;
+    const dz = a.z - b.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }

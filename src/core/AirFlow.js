@@ -1,5 +1,7 @@
+import tunnels from '/src/data/static/tunnels.json' assert { type: 'JSON' };
+
 import createTunnelGeometry from "./tunnelGeom.js";
-import { Mesh } from "three";
+import { Mesh, MeshNormalMaterial } from "three";
 import { cloud_material } from "./shaderMaterials.js";
 import { palette1 } from "./palettes.js";
 import { range } from "./utils/utils.js";
@@ -30,7 +32,8 @@ function init(data, settings) {
 }
 
 function createMesh() {
-    const geom = createTunnelGeometry(width);
+    const geom = createTunnelGeometry(tunnels, width);
+    // material = new MeshNormalMaterial();
     return new Mesh(geom, material);
 }
 

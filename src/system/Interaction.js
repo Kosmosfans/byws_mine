@@ -1,5 +1,5 @@
 import { Raycaster, Vector2 } from "three";
-import MESH_ATTR from '/src/data/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/data/static/mesh_attr.json' assert { type: 'JSON' };
 import Highlight from "../core/Highlight.js";
 import initCallout from "../components/callouts";
 

@@ -10,6 +10,7 @@ import initInteraction from "./Interaction.js";
 
 import initModels from "../components/models.js";
 import {
+    initBillowingStyleFlow,
     initCloudStyleFlow,
     initDropStyleFlow,
     initFlameStyleFlow,
@@ -21,6 +22,8 @@ import initApi from "./api.js";
 import initCoalFlow from "../components/coalFlows.js";
 import initLights from "./lights";
 import initTrams from "../components/trams";
+import initElectro from "../components/electros.js";
+import initSeismic from "../components/seismics";
 
 export default class World {
 
@@ -43,11 +46,14 @@ export default class World {
         // this.flow = initParticleStyleFlow(this);
         // this.flow = initCloudStyleFlow(this);
         // this.flow = initFlameStyleFlow(this);
-        this.flow = initDropStyleFlow(this);
+        // this.flow = initDropStyleFlow(this);
+        this.flow = initBillowingStyleFlow(this);
 
         this.personnel = initPersonnel(this);
         this.coal = initCoalFlow(this);
         this.tram = initTrams(this);
+        this.electro = initElectro(this);
+        this.seismic = initSeismic(this);
 
         initInteraction(this);
         initClips(this);

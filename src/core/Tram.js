@@ -23,7 +23,7 @@ export default class Tram {
 function init() {
     elapsed = 0;
 
-    position = new Vector3().copy(start);
+    position = new Vector3().lerpVectors(start, end, 0.06);
     target = new Vector3().copy(position);
     buffer = new Vector3().copy(target);
     velocity = new Vector3();

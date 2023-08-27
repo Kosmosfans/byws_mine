@@ -1,4 +1,4 @@
-import tunnel_raw from "../../data/tunnel_data.json";
+import tunnel_raw from "../../data/static/tunnels.json";
 import { binarySearch, convertCoordsFromGLTFToThree, rand, len } from "./utils.js";
 import { Vector3 } from "three";
 

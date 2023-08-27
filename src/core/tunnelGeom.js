@@ -1,11 +1,9 @@
-import tunnels from '/src/data/tunnel_data.json' assert { type: 'JSON' };
-
 import { BufferGeometry, Float32BufferAttribute, Vector3 } from "three";
 import { convertCoordsFromGLTFToThree } from "./utils/utils.js";
 
 let positions, uvs, colors, velocities, width;
 
-export default function createTunnelGeometry(_width) {
+export default function createTunnelGeometry(tunnels, _width) {
     width = _width;
 
     positions = [];
@@ -22,6 +20,7 @@ export default function createTunnelGeometry(_width) {
     geometry.setAttribute('speed', new Float32BufferAttribute(velocities, 1));
 
     geometry.computeBoundingBox();
+    geometry.computeVertexNormals();
 
     return geometry;
 }
@@ -57,6 +56,8 @@ function calcTunnelPlane(a, b) {
     const ba = b.clone().sub(a);
     const len = ba.length();
 
+    // project vector ba on floor, then rotate 90
+    ba.setY(0);
     const axisY = new Vector3(0, 1, 0);
     const halfWidthVec = ba.clone().applyAxisAngle(axisY, Math.PI / 2).normalize().multiplyScalar(width);
 

@@ -10,5 +10,5 @@ function geom(s) {
 }
 
 const mat = new MeshPhongMaterial({
-    color: new Color(0.2, 0.2, 0.2)
+    color: new Color(0.1, 0.1, 0.1)
 });

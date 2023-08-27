@@ -3,34 +3,33 @@ import personnelMesh from "./personnelMesh.js";
 import { outside, rand, randInt } from "./utils/utils.js";
 import { sampleTunnel, tunnelDirection } from "./utils/sampler.js";
 
-let _mesh, data, dummy;
-const roaming = new Map();
+let _mesh, data, dummy, roaming;
 
 export default class Personnel {
     constructor(_data) {
         data = _data;
-        initMesh();
-        dataDriven();
+        init();
     }
 
     get mesh() {
         return _mesh;
     }
 
-    tick(delta) {
-        _mesh.material.uniforms.uTime.value += delta;
-        animate();
-    }
+    tick = (delta) => animate(delta);
 }
 
-function initMesh() {
+function init() {
     _mesh = personnelMesh(data.length);
+
     dummy = new Object3D();
+    roaming = new Map();
 
     data.forEach((v, i) => move(i, v.position));
+
+    dataDriven();
 }
 
-function animate() {
+function animate(delta) {
     for (let [i, info] of roaming) {
         data[i].position.add(info.increment);
         move(i, data[i].position);
@@ -45,6 +44,7 @@ function animate() {
     }
 
     _mesh.instanceMatrix.needsUpdate = true;
+    _mesh.material.uniforms.uTime.value += delta;
 }
 
 function move(i, pos) {

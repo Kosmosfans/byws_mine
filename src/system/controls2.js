@@ -1,5 +1,5 @@
 import CameraControls from "camera-controls";
-import camera_status from "/src/data/camera_status.json" assert { type: 'JSON' };
+import camera_status from "/src/data/static/camera_status.json" assert { type: 'JSON' };
 
 import {
     Vector2,
