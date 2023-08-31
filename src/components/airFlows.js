@@ -2,15 +2,15 @@ import AirFlow from "../core/AirFlow.js";
 import {
     billowing_material,
     cloud_material,
-    drop_material, electro_material,
+    drop_material,
     flame_material,
     particle_material
 } from "../core/shaderMaterials.js";
-import { palette1, palette2, palette3, palette4, palette5, palette6, palette7 } from "../core/palettes.js";
-import { data } from "../system/data.js";
+import { palette4, palette6 } from "../core/palettes.js";
+import { DATA } from "../data/DATA.js";
 
 function createAirFlow(world, settings) {
-    const flow = new AirFlow(data.air_init(), settings);
+    const flow = new AirFlow(DATA.air_init(), settings);
 
     world.add(flow.mesh);
     world.registerUpdatable(flow);
@@ -40,10 +40,5 @@ export function initDropStyleFlow(world) {
 
 export function initBillowingStyleFlow(world) {
     const settings = { width: 0.18, material: billowing_material, palette: palette6 };
-    return createAirFlow(world, settings);
-}
-
-export function initElectroStyleFlow(world) {
-    const settings = { width: 0.8, material: electro_material, palette: palette6 };
     return createAirFlow(world, settings);
 }

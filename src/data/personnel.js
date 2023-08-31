@@ -1,11 +1,11 @@
-import { rand, randInt, range } from "../../core/utils/utils.js";
-import { sampleTunnel } from "../../core/utils/sampler.js";
+import { rand, randInt, range } from "../core/utils/utils.js";
+import { sampleTunnel } from "../core/utils/sampler.js";
 import { Vector3 } from "three";
 
 const COUNT = 200;
 
-export function personnelInit() {
-    return range(COUNT).map(() => personInfo());
+export function personnel_init() {
+    return range(COUNT).map(personInfo);
 }
 
 function personInfo() {
@@ -23,6 +23,6 @@ function personInfo() {
     return dummy;
 }
 
-export function personnelUpdate() {
+export function personnel_update() {
     return new Set(range(10).map(() => randInt(COUNT)));
 }

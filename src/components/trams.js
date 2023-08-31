@@ -1,6 +1,5 @@
 import { Vector3 } from "three";
 import Tram from "../core/Tram.js";
-import { Sky } from "three/addons/objects/Sky.js";
 
 const tunnel_top = new Vector3(5.0729, 32.25, 3.63371);
 const tunnel_bottom = new Vector3(71.0683, 11.66, 3.62928);
@@ -12,7 +11,6 @@ export default function initTrams(world) {
     const mesh = world.gltf.scene.getObjectByName('tram');
     const tram = new Tram(mesh, tram_start, tram_end);
 
-    new Sky();
     world.registerUpdatable(tram);
     return tram;
 }

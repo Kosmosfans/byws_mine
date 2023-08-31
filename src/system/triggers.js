@@ -1,33 +1,34 @@
-import { data } from "./data.js";
+import { DATA } from "../data/DATA.js";
 import { randRange } from "../core/utils/utils.js";
 
-// ----- realtime data simulator ------
+// ----- realtime DATA simulator ------
 
 const generators = [
-    { type: 'air_update',       elapsed: 0, interval: 0.53,   min: 0.45, max: 0.53 },
-    { type: 'personnel_update', elapsed: 0, interval: 0.951,  min: 0.8,  max: 0.951 },
-    { type: 'conveyor_update',  elapsed: 0, interval: 2.4,    min: 0.5,  max: 2.4 },
-    { type: 'tram_update',      elapsed: 0, interval: 4.4,    min: 4.1,  max: 4.4 },
-    { type: 'seismic_update',   elapsed: 0, interval: 1.0,    min: 0.5,  max: 1.5 },
+    { func: DATA.air_update,            elapsed: 0, interval: 0.53,   min: 0.45,  max: 0.53 },
+    { func: DATA.personnel_update,      elapsed: 0, interval: 0.95,   min: 0.80,  max: 0.95 },
+    { func: DATA.conveyor_update,       elapsed: 0, interval: 2.40,   min: 0.50,  max: 2.40 },
+    { func: DATA.tram_update,           elapsed: 0, interval: 4.40,   min: 4.10,  max: 4.40 },
+    { func: DATA.seismic_update,        elapsed: 0, interval: 1.00,   min: 0.50,  max: 1.50 },
+    { func: DATA.surveillance_update,   elapsed: 0, interval: 2.22,   min: 1.57,  max: 2.29 },
 ];
 
 class Triggers {
-    tick = (delta) => generators.forEach(target => dataGeneratorTick(target, delta));
+    tick = (delta) => generators.forEach(g => dataGeneratorTick(g, delta));
 }
 
 function dataGeneratorTick(generator, delta) {
     generator.elapsed += delta;
     if (generator.elapsed < generator.interval) return;
 
-    genData(generator.type);
+    generate(generator.func);
 
     generator.elapsed -= generator.interval;
     generator.interval = randRange(generator.min, generator.max);
 }
 
-function genData(type) {
-    const d = { 'data': data[type]() };
-    document.dispatchEvent(new CustomEvent(type, { detail: d }));
+function generate(func) {
+    const d = { 'data': func.call() };
+    document.dispatchEvent(new CustomEvent(func.name, { detail: d }));
 }
 
 export default function initTriggers(world) {

@@ -1,23 +1,21 @@
 import { BufferGeometry, Float32BufferAttribute, Vector3 } from "three";
 import { convertCoordsFromGLTFToThree } from "./utils/utils.js";
 
-let positions, uvs, colors, velocities, width;
+let positions, uvs, width;
 
-export default function createTunnelGeometry(tunnels, _width) {
+export default function createTunnelGeometry(tunnels, _width, covertCoords = true) {
     width = _width;
 
     positions = [];
     uvs = [];
-    colors = [];
-    velocities = [];
 
-    Object.values(tunnels).forEach(t => tunnelGeometry(t));
+    Object.values(tunnels).forEach(t => tunnelGeometry(t, covertCoords));
 
     const geometry = new BufferGeometry();
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
-    geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
-    geometry.setAttribute('speed', new Float32BufferAttribute(velocities, 1));
+    geometry.setAttribute('color', new Float32BufferAttribute(new Float32Array(positions.length), 3));
+    geometry.setAttribute('speed', new Float32BufferAttribute(new Float32Array(uvs.length / 2), 1));
 
     geometry.computeBoundingBox();
     geometry.computeVertexNormals();
@@ -25,9 +23,9 @@ export default function createTunnelGeometry(tunnels, _width) {
     return geometry;
 }
 
-function tunnelGeometry(t) {
-    const a = convertCoordsFromGLTFToThree(t.start);
-    const b = convertCoordsFromGLTFToThree(t.end);
+function tunnelGeometry(t, convertCoords) {
+    const a = convertCoords ? convertCoordsFromGLTFToThree(t.start) : new Vector3(t.start.x, t.start.y, t.start.z);
+    const b = convertCoords ? convertCoordsFromGLTFToThree(t.end) : new Vector3(t.end.x, t.end.y, t.end.z);
 
     const { a0, a1, b0, b1, len } = calcTunnelPlane(a, b);
 
@@ -46,25 +44,19 @@ function tunnelGeometry(t) {
     uvs.push(0, len);
     uvs.push(1, len);
     uvs.push(1, 0);
-
-    velocities.push(0, 0, 0, 0, 0, 0);
-
-    colors.push(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 function calcTunnelPlane(a, b) {
     const ba = b.clone().sub(a);
     const len = ba.length();
 
-    // project vector ba on floor, then rotate 90
-    ba.setY(0);
     const axisY = new Vector3(0, 1, 0);
-    const halfWidthVec = ba.clone().applyAxisAngle(axisY, Math.PI / 2).normalize().multiplyScalar(width);
+    const normal = axisY.cross(ba).normalize().multiplyScalar(width);
 
-    const a0 = a.clone().sub(halfWidthVec);
-    const a1 = a.clone().add(halfWidthVec);
-    const b0 = b.clone().sub(halfWidthVec);
-    const b1 = b.clone().add(halfWidthVec);
+    const a0 = a.clone().sub(normal);
+    const a1 = a.clone().add(normal);
+    const b0 = b.clone().sub(normal);
+    const b1 = b.clone().add(normal);
 
     return { a0, a1, b0, b1, len };
 }

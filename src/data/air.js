@@ -1,16 +1,16 @@
-import tunnel_raw from '/src/data/static/tunnels.json' assert { type: 'JSON' };
-import { rand, randInt, range } from "../../core/utils/utils.js";
+import tunnel_raw from '/src/cfg/tunnels.json' assert { type: 'JSON' };
+import { rand, randInt, range } from "../core/utils/utils.js";
 
 const count = Object.keys(tunnel_raw).length;
 
 function generate(partial = true) {
     const total = partial ? 1 + randInt(10) : count;
-    const off = partial ? randInt(count - 11) : 0;
+    const offset = partial ? randInt(count - 11) : 0;
 
-    return range(total).map(i => item(i, off));
+    return range(total).map(i => item(i, offset));
 }
 
-function item(i, off) {
+function item(i, offset) {
     // normalized speed of each tunnel
     const speed = rand();
 
@@ -18,7 +18,7 @@ function item(i, off) {
     const inactive = rand() > 0.8;
 
     const item = {};
-    item.index = i + off;
+    item.index = i + offset;
     item.speed = speed;
     item.inactive = inactive;
     item.warning = warning;
@@ -26,10 +26,10 @@ function item(i, off) {
     return item;
 }
 
-export function airInit() {
+export function air_init() {
     return generate(false);
 }
 
-export function airUpdate() {
+export function air_update() {
     return generate(true);
 }

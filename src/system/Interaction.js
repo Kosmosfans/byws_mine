@@ -1,5 +1,5 @@
 import { Raycaster, Vector2 } from "three";
-import MESH_ATTR from '/src/data/static/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/cfg/mesh_attr.json' assert { type: 'JSON' };
 import Highlight from "../core/Highlight.js";
 import initCallout from "../components/callouts";
 
@@ -23,7 +23,7 @@ function init() {
     mouse = new Vector2();
     rayCaster = new Raycaster();
 
-    findInteractableMeshes();
+    initInteractableMeshes();
     highlighter = new Highlight(intractable);
     setupListeners();
 }
@@ -38,7 +38,7 @@ function checkInteraction() {
     needCheck = false;
 }
 
-function findInteractableMeshes() {
+function initInteractableMeshes() {
     intractable = [];
     scene.traverse(m => MESH_ATTR[m.name] && MESH_ATTR[m.name]['interactable'] ? intractable.push(m) : {});
 }

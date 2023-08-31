@@ -1,4 +1,4 @@
-import { AdditiveBlending, NormalBlending, ShaderMaterial, Vector4 } from "three";
+import { AdditiveBlending, DoubleSide, NormalBlending, ShaderMaterial, Vector4 } from "three";
 
 import v_flow from "../shaders/flow.vert";
 import f_cloud from "../shaders/flow_cloud.frag";
@@ -13,6 +13,13 @@ import f_highlight from "../shaders/highlight.frag";
 
 import v_blink from "../shaders/blink.vert";
 import f_blink from "../shaders/blink.frag";
+
+import v_scanner from "../shaders/scanner.vert";
+import f_scanner from "../shaders/scanner.frag";
+
+import v_thread from "../shaders/thread.vert";
+import f_thread from "../shaders/thread.frag";
+
 
 export const cloud_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
@@ -83,4 +90,22 @@ export const blink_material = new ShaderMaterial({
     transparent: false,
     blending: NormalBlending,
     vertexColors: true
+});
+
+export const scanner_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_scanner,
+    fragmentShader: f_scanner,
+    transparent: true,
+    blending: AdditiveBlending,
+    side: DoubleSide
+});
+
+export const thread_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_thread,
+    fragmentShader: f_thread,
+    transparent: true,
+    blending: AdditiveBlending,
+    side: DoubleSide
 });

@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import MESH_ATTR from '/src/data/static/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/cfg/mesh_attr.json' assert { type: 'JSON' };
 
 import { Mesh, MeshBasicMaterial, TextureLoader } from "three";
 
@@ -43,7 +43,7 @@ function transformation() {
 function createMaterials() {
     materials = new Map();
     const textureFiles = new Set(Object.keys(MESH_ATTR).filter(n => MESH_ATTR[n]['texture']).map(k => MESH_ATTR[k]['texture']));
-    textureFiles.forEach(f => createMaterial(f));
+    textureFiles.forEach(createMaterial);
 }
 
 function createMaterial(f) {

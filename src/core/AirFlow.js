@@ -1,7 +1,7 @@
-import tunnels from '/src/data/static/tunnels.json' assert { type: 'JSON' };
+import tunnels from '/src/cfg/tunnels.json' assert { type: 'JSON' };
 
 import createTunnelGeometry from "./tunnelGeom.js";
-import { Mesh, MeshNormalMaterial } from "three";
+import { Mesh } from "three";
 import { cloud_material } from "./shaderMaterials.js";
 import { palette1 } from "./palettes.js";
 import { range } from "./utils/utils.js";
@@ -33,7 +33,6 @@ function init(data, settings) {
 
 function createMesh() {
     const geom = createTunnelGeometry(tunnels, width);
-    // material = new MeshNormalMaterial();
     return new Mesh(geom, material);
 }
 
@@ -43,24 +42,18 @@ function update(delta) {
 
 
 function updateAttributes(data) {
-    data.forEach(d => {
-        updateVelocity(d);
-        updateColor(d);
-    });
+    data.forEach(updateAttributesOfSegment);
 
     _mesh.geometry.attributes.speed.needsUpdate = true;
     _mesh.geometry.attributes.color.needsUpdate = true;
 }
 
-function updateVelocity(info) {
-    // 6 vertices per tunnel segment
+function updateAttributesOfSegment(info) {
+    // speed
     range(6).forEach(j => _mesh.geometry.attributes.speed.array[info.index * 6 + j] = info.speed);
-}
 
-function updateColor(info) {
+    // color
     const color = palette.getColor(info.speed, info.warning, info.inactive);
-
-    // 6 vertices per tunnel, 3 color components per vertex
     range(6).forEach(j => {
         _mesh.geometry.attributes.color.array[info.index * 18 + j * 3] = color[0];
         _mesh.geometry.attributes.color.array[info.index * 18 + j * 3 + 1] = color[1];

@@ -3,7 +3,7 @@ import { Vector3 } from "three";
 let position, start, end, target, buffer, _mesh;
 let elapsed, velocity;
 
-const BUFFER_ACCESS_INTERVAL = 3.0;
+const INTERVAL = 3.0;
 
 export default class Tram {
     constructor(mesh, _start, _end) {
@@ -35,7 +35,7 @@ function init() {
 
 function update(delta) {
     elapsed += delta;
-    if (elapsed >= BUFFER_ACCESS_INTERVAL) updateTarget();
+    if (elapsed >= INTERVAL) updateTarget();
 
     position.add(velocity.clone().multiplyScalar(delta));
     _mesh.position.set(position.x, position.y, position.z);
@@ -43,10 +43,10 @@ function update(delta) {
 
 function updateTarget() {
     target = buffer;
-    elapsed -= BUFFER_ACCESS_INTERVAL;
+    elapsed -= INTERVAL;
 
     // update speed of tram (meters per second)
-    velocity = target.clone().sub(position).multiplyScalar(1 / BUFFER_ACCESS_INTERVAL);
+    velocity = target.clone().sub(position).multiplyScalar(1 / INTERVAL);
 }
 
 function dataDriven() {

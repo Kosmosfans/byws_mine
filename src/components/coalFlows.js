@@ -1,4 +1,4 @@
-import paths from "../data/static/conveyor_paths.json" assert { type: 'JSON' };
+import paths from "../cfg/conveyor_paths.json" assert { type: 'JSON' };
 import ParticleFlow from "../core/ParticleFlow.js";
 
 export default function initCoalFlow(world) {

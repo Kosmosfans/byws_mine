@@ -6,15 +6,16 @@ import {
     Mesh,
     MeshBasicMaterial,
     PlaneGeometry,
-    Vector2,
     Vector3
 } from "three";
-import { randomVec3 } from "./utils/utils.js";
+import { outside, randomVec3 } from "./utils/utils.js";
 
-const FRAME_SIZE = new Vector2(4, 1);
-const FRAME_POS = new Vector3(1.7, 2.3, 0);
-const FRAME_ROAM_BOX = new Vector3(0.5, 0.5, 0.5);
-const HANDLE_ROAM_BOX = new Vector3(1, 0.5, 1);
+const cfg = {
+    frame_size: [4, 1],
+    frame_pos: [1.7, 2.3, 0],
+    box1: [0.5, 0.5, 0.5],
+    box2: [1, 0.5, 1]
+}
 
 let camera, meshes, frame, handle;
 
@@ -42,26 +43,26 @@ function initialize() {
 }
 
 function createFrameMesh() {
-    const geom = new PlaneGeometry(FRAME_SIZE.x, FRAME_SIZE.y, 1, 1);
+    const geom = new PlaneGeometry(cfg.frame_size[0], cfg.frame_size[1]);
     const mat = new MeshBasicMaterial({ side: DoubleSide, transparent: true });
     const mesh = new Mesh(geom, mat);
 
-    mesh.position.set(FRAME_SIZE.x / 2 + FRAME_POS.x, FRAME_SIZE.y / 2 + FRAME_POS.y, 0);
+    mesh.position.set(cfg.frame_size[0] / 2 + cfg.frame_pos[0], cfg.frame_size[1] / 2 + cfg.frame_pos[1], 0);
 
     meshes.add(mesh);
 }
 
 function createHandleMesh() {
     const source = new Vector3(0, 0.05, 0);
-    const target = FRAME_POS.clone().add(new Vector3(-0, -0, 0));
+    const target = new Vector3(cfg.frame_pos[0], cfg.frame_pos[1], cfg.frame_pos[2]);
     const mid = new Vector3().lerpVectors(source, target, 0.5);
 
     const points = [];
     points.push(target);
-    points.push(target.clone().add(new Vector3(0, FRAME_SIZE.y, 0)));
+    points.push(target.clone().add(new Vector3(0, cfg.frame_size[1], 0)));
 
     points.push(target);
-    points.push(target.clone().add(new Vector3(FRAME_SIZE.x, 0, 0)));
+    points.push(target.clone().add(new Vector3(cfg.frame_size[0], 0, 0)));
 
     points.push(target);
     points.push(mid);
@@ -101,17 +102,17 @@ function roam(delta) {
     const frameDelta = frame.speed.clone().multiplyScalar(delta);
     frame.displace.add(frameDelta);
 
-    if (Math.abs(frame.displace.x) > FRAME_ROAM_BOX.x) frame.speed.x *= -1;
-    if (Math.abs(frame.displace.y) > FRAME_ROAM_BOX.y) frame.speed.y *= -1;
-    if (Math.abs(frame.displace.z) > FRAME_ROAM_BOX.z) frame.speed.z *= -1;
+    if (outside(frame.displace.x, -cfg.box1[0], cfg.box1[0])) frame.speed.x *= -1;
+    if (outside(frame.displace.y, -cfg.box1[1], cfg.box1[1])) frame.speed.y *= -1;
+    if (outside(frame.displace.z, -cfg.box1[2], cfg.box1[2])) frame.speed.z *= -1;
 
     frame.mesh.position.add(frameDelta);
 
     const handleDelta = handle.speed.clone().multiplyScalar(delta);
     handle.displace.add(handleDelta);
-    if (Math.abs(handle.displace.x) > HANDLE_ROAM_BOX.x) handle.speed.x *= -1;
-    if (Math.abs(handle.displace.y) > HANDLE_ROAM_BOX.y) handle.speed.y *= -1;
-    if (Math.abs(handle.displace.z) > HANDLE_ROAM_BOX.z) handle.speed.z *= -1;
+    if (outside(handle.displace.x, -cfg.box2[0], cfg.box2[0])) handle.speed.x *= -1;
+    if (outside(handle.displace.y, -cfg.box2[1], cfg.box2[1])) handle.speed.y *= -1;
+    if (outside(handle.displace.z, -cfg.box2[2], cfg.box2[2])) handle.speed.z *= -1;
 
     const points = handle.mesh1.geometry.attributes.position.array;
     for (let i = 0; i < 5; i++) {

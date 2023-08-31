@@ -30,21 +30,23 @@ function init() {
 }
 
 function animate(delta) {
-    for (let [i, info] of roaming) {
-        data[i].position.add(info.increment);
-        move(i, data[i].position);
-
-        if (--info.life < 0) roaming.delete(i);
-
-        data[i].proportion += info.speed;
-        if (!outside(data[i].proportion, 0, 1)) continue;
-
-        info.speed = -info.speed;
-        info.increment.multiplyScalar(-1);
-    }
+    for (let [i, info] of roaming) updatePersonPos(i, info);
 
     _mesh.instanceMatrix.needsUpdate = true;
     _mesh.material.uniforms.uTime.value += delta;
+}
+
+function updatePersonPos(i, info) {
+    data[i].position.add(info.increment);
+    move(i, data[i].position);
+
+    if (--info.life < 0) roaming.delete(i);
+
+    data[i].proportion += info.speed;
+    if (!outside(data[i].proportion, 0, 1)) return;
+
+    info.speed = -info.speed;
+    info.increment.multiplyScalar(-1);
 }
 
 function move(i, pos) {
@@ -54,7 +56,7 @@ function move(i, pos) {
 }
 
 function updatePersonStatus(personList) {
-    personList.forEach(i => makeRandomAction(i));
+    personList.forEach(makeRandomAction);
     _mesh.instanceMatrix.needsUpdate = true;
 }
 

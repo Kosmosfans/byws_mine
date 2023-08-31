@@ -1,5 +1,5 @@
 import { TextureLoader, Vector3 } from "three";
-import MESH_ATTR from '/src/data/static/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/cfg/mesh_attr.json' assert { type: 'JSON' };
 import CalloutChart from "./CalloutChart.js";
 
 let chart, titles;

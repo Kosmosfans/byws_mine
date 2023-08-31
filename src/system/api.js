@@ -11,8 +11,11 @@ const UI = {
         module_button_4: 'tram',
         module_button_5: 'electro',
         module_button_6: 'seismic',
-        module_button_7: 'none',
-        module_button_8: 'none',
+        module_button_7: 'surveillance',
+        module_button_8: 'patrol',
+
+        module_button_9: 'none',
+        module_button_A: 'none',
     },
 
     cameraBind: {
@@ -31,11 +34,11 @@ export default function initApi(_world) {
     world = _world;
 
     UI.moduleButtons.forEach(b => b.addEventListener('click', (e) => moduleButtonClicked(e.target)));
-    // first tab as default
+    // default module
     UI.moduleButtons[0].dispatchEvent(new Event('click'));
 
     UI.cameraButtons.forEach(b => b.addEventListener('click', (e) => cameraButtonClicked(e.target)));
-    // initial camera status
+    // default camera
     UI.cameraButtons[0].dispatchEvent(new Event('click'));
 }
 

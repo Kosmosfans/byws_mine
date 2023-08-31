@@ -5,7 +5,7 @@ let masks;
 export default class Highlight {
     constructor(meshes) {
         masks = new Map();
-        meshes.forEach((m) => createMask(m));
+        meshes.forEach(createMask);
     }
 
     setTarget(target) {

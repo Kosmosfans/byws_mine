@@ -1,5 +1,5 @@
 import CameraControls from "camera-controls";
-import camera_status from "/src/data/static/camera_status.json" assert { type: 'JSON' };
+import camera_status from "/src/cfg/camera_status.json" assert { type: 'JSON' };
 
 import {
     Vector2,
@@ -14,15 +14,15 @@ import {
 } from 'three';
 
 const subsetOfTHREE = {
-    Vector2: Vector2,
-    Vector3: Vector3,
-    Vector4: Vector4,
-    Quaternion: Quaternion,
-    Matrix4: Matrix4,
-    Spherical: Spherical,
-    Box3: Box3,
-    Sphere: Sphere,
-    Raycaster: Raycaster,
+    Vector2,
+    Vector3,
+    Vector4,
+    Quaternion,
+    Matrix4,
+    Spherical,
+    Box3,
+    Sphere,
+    Raycaster,
 };
 
 CameraControls.install({ THREE: subsetOfTHREE });
@@ -52,6 +52,6 @@ export default function initCameraControl(world) {
 
 export function setCamera(type) {
     const cs = camera_status[type];
-    cc.setLookAt(cs.px, cs.py, cs.pz, cs.tx, cs.ty, cs.tz, true).then();
+    cc.setLookAt(cs['px'], cs['py'], cs['pz'], cs['tx'], cs['ty'], cs['tz'], true).then();
     cc.zoomTo(cs.zoom, true).then();
 }

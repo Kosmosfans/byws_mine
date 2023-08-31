@@ -1,21 +1,18 @@
-import geophone_locations from "../data/static/geophone_locations.json" assert { type: 'JSON' };
-import { Group, IcosahedronGeometry, InstancedMesh, Mesh, MeshBasicMaterial, Object3D } from "three";
+import geophone_locations from "../cfg/geophone_locations.json" assert { type: 'JSON' };
+import { Group, IcosahedronGeometry, InstancedMesh, Mesh, MeshBasicMaterial } from "three";
 import { range } from "./utils/utils.js";
 
 export default function seismicMesh() {
-    const waveMesh = createWaveMesh();
-    const geophoneMesh = createGeophoneMesh();
-
     const group = new Group();
-    group.add(waveMesh, geophoneMesh);
+    group.add(createWaveMesh(), createSensorMesh());
 
     return group;
 }
 
 function createWaveMesh() {
-    const result = new Group();
-    range(5).forEach(() => result.add(createSingleWave()));
-    return result;
+    const mesh = new Group();
+    range(5).forEach(() => mesh.add(createSingleWave()));
+    return mesh;
 }
 
 function createSingleWave() {
@@ -33,19 +30,17 @@ function createSingleWave() {
     return mesh;
 }
 
-function createGeophoneMesh() {
+function createSensorMesh() {
     const count = geophone_locations.length;
     const mesh = new InstancedMesh(new IcosahedronGeometry(0.25, 1), new MeshBasicMaterial(), count);
-    initGeophoneLocations(mesh);
+    initSensorLocations(mesh);
     return mesh;
 }
 
-function initGeophoneLocations(mesh) {
-    const dummy = new Object3D();
-
+function initSensorLocations(mesh) {
     geophone_locations.forEach((v, i) => {
-        dummy.position.set(v.x, v.y, v.z);
-        dummy.updateMatrix();
-        mesh.setMatrixAt(i, dummy.matrix);
+        mesh.instanceMatrix.array[i * 16 + 12] = v.x;
+        mesh.instanceMatrix.array[i * 16 + 13] = v.y;
+        mesh.instanceMatrix.array[i * 16 + 14] = v.z;
     })
 }

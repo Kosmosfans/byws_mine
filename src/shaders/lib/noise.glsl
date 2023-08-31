@@ -1,4 +1,4 @@
-#define NUM_NOISE_OCTAVES 3
+#define NUM_NOISE_OCTAVES 7
 
 float hash(float p) {
     p = fract(p * 0.011);

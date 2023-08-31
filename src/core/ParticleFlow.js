@@ -37,7 +37,7 @@ function initDummy() {
 }
 
 function calcPathsDetail() {
-    paths.forEach(p => calcPathDetail(p));
+    paths.forEach(calcPathDetail);
 }
 
 function calcPathDetail(p) {
@@ -48,7 +48,7 @@ function calcPathDetail(p) {
 }
 
 function calcPathCapacity() {
-    const maxParticleCnt = settings['particleCnt'] || 5000;
+    const maxParticleCnt = settings['particleCnt'] || 500;
     const totalDistance = paths.map(p => p.distance).reduce((a, b) => a + b, 0);
 
     let runningTotal = 0;
@@ -65,7 +65,7 @@ function initParticles() {
     ps.positions = new Float32Array(ps.size * 3);
     ps.jitters = randArray(200, settings['tunnelWidth'] || 0.3);
 
-    paths.forEach(p => initParticlesOfPath(p));
+    paths.forEach(initParticlesOfPath);
 }
 
 function initParticlesOfPath(path) {

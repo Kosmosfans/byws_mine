@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, IcosahedronGeometry, InstancedMesh, MeshPhongMaterial } from "three";
+import { Color, IcosahedronGeometry, InstancedMesh, MeshPhongMaterial } from "three";
 
 export default function particleFlowMesh(count, size) {
     return new InstancedMesh(geom(size), mat, count);

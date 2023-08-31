@@ -24,6 +24,8 @@ import initLights from "./lights";
 import initTrams from "../components/trams";
 import initElectro from "../components/electros.js";
 import initSeismic from "../components/seismics";
+import initSurveillance from "../components/surveillances.js";
+import initPatrol from "../components/patrols.js";
 
 export default class World {
 
@@ -54,6 +56,8 @@ export default class World {
         this.tram = initTrams(this);
         this.electro = initElectro(this);
         this.seismic = initSeismic(this);
+        this.surveillance = initSurveillance(this);
+        this.patrol = initPatrol(this);
 
         initInteraction(this);
         initClips(this);

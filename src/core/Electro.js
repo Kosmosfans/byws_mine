@@ -1,10 +1,10 @@
-import tunnels from '/src/data/static/electro_paths.json' assert { type: 'JSON' };
+import tunnels from '/src/cfg/electro_paths.json' assert { type: 'JSON' };
 
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Mesh } from "three";
 import { electro_material } from "./shaderMaterials.js";
 import { palette6 } from "./palettes.js";
-import { rand, range } from "./utils/utils.js";
+import { rand, randRange, range } from "./utils/utils.js";
 
 let _mesh, width, palette;
 
@@ -39,7 +39,7 @@ function setupColors() {
 }
 
 function setupColor(i) {
-    const color = palette.getColor(0.15 + rand() * 0.05, false, false);
+    const color = palette.getColor(randRange(0.15, 0.2), false, false);
 
     // 6 vertices per tunnel, 3 color components per vertex
     range(6).forEach(j => {
