@@ -20,7 +20,6 @@ function createSingleWave() {
     const mat = new MeshBasicMaterial({
         color: 0xFFFFFF,
         transparent: true,
-        opacity: 0.08,
         wireframe: true
     })
 

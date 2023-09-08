@@ -1,25 +1,24 @@
 import { Mesh } from "three";
 import { highlight_material } from "./shaderMaterials.js";
+import { deleteObject3D } from "./utils/utils.js";
 
-let masks;
+let _mesh;
 export default class Highlight {
-    constructor(meshes) {
-        masks = new Map();
-        meshes.forEach(createMask);
-    }
-
     setTarget(target) {
-        masks.get(target.name).visible = true;
+        _mesh = new Mesh(target.geometry, highlight_material);
+        target.add(_mesh);
     }
 
-    clear(currentPick) {
-        masks.get(currentPick.name).visible = false;
+    get mesh() {
+        return _mesh;
     }
-}
 
-function createMask(mesh) {
-    const mask = new Mesh(mesh.geometry, highlight_material);
-    mask.visible = false;
-    mesh.add(mask);
-    masks.set(mesh.name, mask);
+    clear() {
+        deleteObject3D(_mesh);
+        _mesh = null;
+    }
+
+    tick(delta) {
+        if (_mesh) _mesh.material.uniforms.uTime.value += delta;
+    }
 }

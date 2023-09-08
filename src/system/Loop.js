@@ -8,11 +8,6 @@ class Loop {
         this.scene = scene;
         this.renderer = renderer;
         this.updatables = new Set();
-
-        document.addEventListener("visibilitychange", () => {
-            document.visibilityState !== "visible" ? this.stop() : this.start();
-        });
-
     }
 
     start() {
@@ -25,6 +20,10 @@ class Loop {
 
     registerUpdatable(obj) {
         this.updatables.add(obj);
+    }
+
+    removeUpdatable(obj) {
+        this.updatables.delete(obj);
     }
 
     #tick() {

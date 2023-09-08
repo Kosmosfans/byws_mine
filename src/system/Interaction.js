@@ -16,7 +16,10 @@ class Interaction {
         init();
     }
 
-    tick = () => checkInteraction();
+    tick(delta) {
+        checkInteraction();
+        highlighter.tick(delta);
+    }
 }
 
 function init() {
@@ -24,7 +27,7 @@ function init() {
     rayCaster = new Raycaster();
 
     initInteractableMeshes();
-    highlighter = new Highlight(intractable);
+    highlighter = new Highlight();
     setupListeners();
 }
 
@@ -61,7 +64,7 @@ function highlight(object) {
 function clear() {
     if (!currentPick) return;
 
-    highlighter.clear(currentPick);
+    highlighter.clear();
     callout.clear();
     currentPick = null;
 }

@@ -1,6 +1,6 @@
 import surveillanceMesh from "./surveillanceMesh.js";
 import { Color, Object3D, Vector3 } from "three";
-import { rand, randRange } from "./utils/utils.js";
+import { rand } from "./utils/utils.js";
 
 const AXIS_Y = new Vector3(0, 1, 0);
 const COLOR_1 = new Color(0.2, 0.9, 0.2);
@@ -30,7 +30,7 @@ function init() {
 
     _mesh = surveillanceMesh(positions.length);
 
-    phases = positions.map(() => randRange(0, Math.PI * 2));
+    phases = positions.map(() => rand(0, Math.PI * 2));
     initSurveillancePositions();
     initSurveillanceColors();
 

@@ -4,6 +4,7 @@ import { conveyor_update } from "./conveyor.js";
 import { tram_update } from "./tram.js";
 import { seismic_update } from "./seismic.js";
 import { surveillance_init, surveillance_update } from "./surveillance.js";
+import { monitor_init, monitor_update } from "./monitor.js";
 
 
 export const DATA = {
@@ -21,4 +22,7 @@ export const DATA = {
 
     surveillance_init,
     surveillance_update,
+
+    monitor_init,
+    monitor_update,
 }

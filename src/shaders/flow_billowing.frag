@@ -8,7 +8,7 @@ varying float vSpeed;
 
 void main() {
     float border = 1. - 2. * abs(vUv.x - 0.5);
-    if (border < 0.55) discard;
+    if (border < 0.5) discard;
 
     const float nscale = 0.5;
     vec2 uv = nscale * (vUv - 0.5);
@@ -34,7 +34,5 @@ void main() {
     }
 
     noise = 0.5 - 0.4 * noise;
-
-//    gl_FragColor = vec4(2.0 * noise * vColor, 1.0);
-    gl_FragColor = vec4(vColor, 1.4 * noise);
+    gl_FragColor = vec4(vColor, noise);
 }

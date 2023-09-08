@@ -1,4 +1,5 @@
 import { Vector3 } from "three";
+import tramMesh from "./tramMesh.js";
 
 let position, start, end, target, buffer, _mesh;
 let elapsed, velocity;
@@ -6,10 +7,10 @@ let elapsed, velocity;
 const INTERVAL = 3.0;
 
 export default class Tram {
-    constructor(mesh, _start, _end) {
-        _mesh = mesh;
+    constructor(meshFromGltf, _start, _end) {
         start = _start;
         end = _end;
+        _mesh = tramMesh(meshFromGltf, start, end);
         init();
     }
 
@@ -17,7 +18,10 @@ export default class Tram {
         return _mesh;
     }
 
-    tick = delta => update(delta);
+    tick(delta) {
+        _mesh.children[1].material.uniforms.uTime.value += delta;
+        update(delta);
+    }
 }
 
 function init() {
@@ -28,7 +32,7 @@ function init() {
     buffer = new Vector3().copy(target);
     velocity = new Vector3();
 
-    _mesh.position.set(start.x, start.y, start.z);
+    _mesh.children[0].position.set(start.x, start.y, start.z);
 
     dataDriven();
 }
@@ -38,7 +42,7 @@ function update(delta) {
     if (elapsed >= INTERVAL) updateTarget();
 
     position.add(velocity.clone().multiplyScalar(delta));
-    _mesh.position.set(position.x, position.y, position.z);
+    _mesh.children[0].position.set(position.x, position.y, position.z);
 }
 
 function updateTarget() {
@@ -53,6 +57,6 @@ function dataDriven() {
     document.addEventListener('tram_update', e => updateBuffer(e.detail.data));
 }
 
-function updateBuffer(prop) {
-    buffer.lerpVectors(start, end, prop);
+function updateBuffer(pct) {
+    buffer.lerpVectors(start, end, pct);
 }

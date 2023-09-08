@@ -81,7 +81,7 @@ function deactivate(i) {
 }
 
 function roam(i) {
-    const speed = rand() * 0.001;
+    const speed = rand(0, 0.001);
     const increment = tunnelDirection(data[i].tunnelIdx).multiplyScalar(speed);
     const life = randInt(800);
 

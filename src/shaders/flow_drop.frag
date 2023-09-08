@@ -9,8 +9,6 @@ varying float vSpeed;
 void main() {
     vec2 uv = vec2(vUv.x * 8., -vUv.y);
 
-    vec3 col = vColor;
-
     float dx = fract(uv.x);
     uv.x = floor(uv.x);
     float t =  uTime * (0.1 + vSpeed);
@@ -25,7 +23,6 @@ void main() {
     yv = sin(yv * PI) * (s * 15.0);
     float d2 = sin(dx * PI);
     yv *= d2 * d2;
-    col = col * yv;
 
-    gl_FragColor = vec4(col, 1.0);
+    gl_FragColor = vec4(vColor * yv, .7);
 }

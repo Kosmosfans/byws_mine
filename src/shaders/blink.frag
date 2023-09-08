@@ -23,7 +23,8 @@ vec3 hsv2rgb(vec3 c)
 
 void main() {
     vec3 light = normalize(vec3(1., 0.2, 0.5));
-    float diffuse = dot(vNormal, light) + 0.4;
+    float diffuse = dot(vNormal, light) * 0.4 + 0.6;
+    diffuse = pow(diffuse, 0.43); // gamma correction
 
     float id = hash(vPosition.xz / 50.0);
     vec3 col = palette(id);

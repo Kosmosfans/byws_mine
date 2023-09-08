@@ -11,7 +11,7 @@ class Clips {
     tick = (delta) => this.mixer.update(delta);
 }
 
-export default function initClips(world) {
+export default function initGltfClips(world) {
     const clips = new Clips(world.gltf);
     clips.playAll();
 

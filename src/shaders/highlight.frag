@@ -1,5 +1,6 @@
-uniform vec4 uColor;
+uniform float uTime;
 
 void main() {
-    gl_FragColor = uColor;
+    float alpha = abs(sin(uTime * 2.5)) * 0.25;
+    gl_FragColor = vec4(1., 1., 1., alpha);
 }

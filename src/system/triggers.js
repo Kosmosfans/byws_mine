@@ -1,5 +1,5 @@
 import { DATA } from "../data/DATA.js";
-import { randRange } from "../core/utils/utils.js";
+import { rand } from "../core/utils/utils.js";
 
 // ----- realtime DATA simulator ------
 
@@ -10,6 +10,8 @@ const generators = [
     { func: DATA.tram_update,           elapsed: 0, interval: 4.40,   min: 4.10,  max: 4.40 },
     { func: DATA.seismic_update,        elapsed: 0, interval: 1.00,   min: 0.50,  max: 1.50 },
     { func: DATA.surveillance_update,   elapsed: 0, interval: 2.22,   min: 1.57,  max: 2.29 },
+    { func: DATA.monitor_update,        elapsed: 0, interval: 1.40,   min: 1.25,  max: 1.80 },
+
 ];
 
 class Triggers {
@@ -23,7 +25,7 @@ function dataGeneratorTick(generator, delta) {
     generate(generator.func);
 
     generator.elapsed -= generator.interval;
-    generator.interval = randRange(generator.min, generator.max);
+    generator.interval = rand(generator.min, generator.max);
 }
 
 function generate(func) {

@@ -3,7 +3,7 @@ import {
     billowing_material,
     cloud_material,
     drop_material,
-    flame_material,
+    flame_material, navigator_material,
     particle_material
 } from "../core/shaderMaterials.js";
 import { palette4, palette6 } from "../core/palettes.js";
@@ -19,7 +19,7 @@ function createAirFlow(world, settings) {
 }
 
 export function initCloudStyleFlow(world) {
-    const settings = { width: 0.1, material: cloud_material, palette: palette4 };
+    const settings = { width: 0.14, material: cloud_material, palette: palette6 };
     return createAirFlow(world, settings);
 }
 
@@ -40,5 +40,10 @@ export function initDropStyleFlow(world) {
 
 export function initBillowingStyleFlow(world) {
     const settings = { width: 0.18, material: billowing_material, palette: palette6 };
+    return createAirFlow(world, settings);
+}
+
+export function initNavigatorStyleFlow(world) {
+    const settings = { width: 0.16, material: navigator_material, palette: palette6 };
     return createAirFlow(world, settings);
 }

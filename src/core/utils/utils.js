@@ -14,16 +14,12 @@ export function randInt(a) {
     return Math.floor(Math.random() * a);
 }
 
-export function rand() {
-    return Math.random();
+export function rand(a = 0, b = 1) {
+    return a + Math.random() * (b - a);
 }
 
 export function range(a) {
     return [...Array(a).keys()];
-}
-
-export function randRange(a, b) {
-    return a + rand() * (b - a);
 }
 
 export function reflect(a, edge0 = 0, edge1 = 1) {
@@ -66,4 +62,14 @@ export function distance(a, b) {
     const dy = a.y - b.y;
     const dz = a.z - b.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+export function deleteObject3D(obj) {
+    if (obj.children) obj.children.forEach(c => deleteObject3D(c));
+    if (obj.parent) obj.parent.remove(obj);
+
+    if (!obj.isMesh) return;
+
+    obj.geometry.dispose();
+    obj.material.dispose();
 }

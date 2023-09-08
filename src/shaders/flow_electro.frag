@@ -17,5 +17,5 @@ void main()
     float flash = mix(0.0, 0.2, hash11(uTime)) / dist;
     vec3 col = vColor * flash * flash;
 
-    gl_FragColor = vec4(col, 1.0);
+    gl_FragColor = vec4(col, 0.55);
 }

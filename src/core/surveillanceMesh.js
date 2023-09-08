@@ -1,4 +1,10 @@
-import { BoxGeometry, Group, InstancedMesh, MeshPhongMaterial, PlaneGeometry } from "three";
+import {
+    BoxGeometry,
+    Group,
+    InstancedMesh,
+    MeshLambertMaterial,
+    PlaneGeometry
+} from "three";
 import * as BGU from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { scanner_material } from "./shaderMaterials.js";
 
@@ -35,5 +41,5 @@ function createCameraGeom() {
 }
 
 function createCameraMat() {
-    return new MeshPhongMaterial({ color: 0x606060 });
+    return new MeshLambertMaterial({ color: 0x606060 });
 }

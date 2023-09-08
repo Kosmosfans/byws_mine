@@ -1,18 +1,28 @@
 import patrol_paths from "../cfg/patrol_paths.json" assert { type: "JSON" };
 
-import { Group, InstancedMesh, Mesh, MeshPhongMaterial, PlaneGeometry } from "three";
+import {
+    Group,
+    InstancedMesh,
+    Mesh,
+    MeshLambertMaterial,
+    PlaneGeometry
+} from "three";
 import * as BGU from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { scanner_material, thread_material } from "./shaderMaterials.js";
 import createTunnelGeometry from "./tunnelGeom.js";
 
-export default function patrolMesh(robotMesh, count) {
-    const robots = new InstancedMesh(robotMesh.geometry, new MeshPhongMaterial({ color: 0x505050 }), count);
-    const scan = new InstancedMesh(createScanGeom(), scanner_material, count);
+export default function patrolMesh(meshFromGltf) {
+    const robots = new InstancedMesh(meshFromGltf.geometry, createRobotMat(), patrol_paths.length);
+    const scan = new InstancedMesh(createScanGeom(), scanner_material, patrol_paths.length);
     const rail = new Mesh(createRailGeom(), thread_material);
 
     const group = new Group();
     group.add(robots, scan, rail);
     return group;
+}
+
+function createRobotMat() {
+    return new MeshLambertMaterial({ color: 0x666666 });
 }
 
 function createScanGeom() {
@@ -39,6 +49,6 @@ function createRailGeom() {
 
 function getRailPosition(p) {
     const start = { x: p.start.x, y: p.start.y + .7, z: p.start.z };
-    const end =  { x: p.end.x, y: p.end.y + .7, z: p.end.z };
+    const end = { x: p.end.x, y: p.end.y + .7, z: p.end.z };
     return { start, end };
 }

@@ -1,4 +1,4 @@
-import { AdditiveBlending, DoubleSide, NormalBlending, ShaderMaterial, Vector4 } from "three";
+import { AdditiveBlending, DoubleSide, NormalBlending, ShaderMaterial } from "three";
 
 import v_flow from "../shaders/flow.vert";
 import f_cloud from "../shaders/flow_cloud.frag";
@@ -7,6 +7,7 @@ import f_flame from "../shaders/flow_flame.frag";
 import f_drop from "../shaders/flow_drop.frag";
 import f_billowing from "../shaders/flow_billowing.frag";
 import f_electro from "../shaders/flow_electro.frag";
+import f_navigator from "../shaders/flow_navigator.frag";
 
 import v_highlight from "../shaders/highlight.vert";
 import f_highlight from "../shaders/highlight.frag";
@@ -20,6 +21,14 @@ import f_scanner from "../shaders/scanner.frag";
 import v_thread from "../shaders/thread.vert";
 import f_thread from "../shaders/thread.frag";
 
+import v_sensor from "../shaders/sensor.vert";
+import f_sensor from "../shaders/sensor.frag";
+
+import v_smoke from "../shaders/smoke.vert";
+import f_smoke from "../shaders/smoke.frag";
+
+import v_jet from "../shaders/jet.vert";
+import f_jet from "../shaders/jet.frag";
 
 export const cloud_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
@@ -66,6 +75,16 @@ export const billowing_material = new ShaderMaterial({
     vertexColors: true
 });
 
+export const navigator_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_flow,
+    fragmentShader: f_navigator,
+    transparent: true,
+    blending: AdditiveBlending,
+    vertexColors: true
+});
+
+
 export const electro_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: v_flow,
@@ -75,8 +94,17 @@ export const electro_material = new ShaderMaterial({
     vertexColors: true
 });
 
+export const jet_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_jet,
+    fragmentShader: f_jet,
+    transparent: true,
+    blending: AdditiveBlending,
+    vertexColors: true
+});
+
 export const highlight_material = new ShaderMaterial({
-    uniforms: { uNormalOff: { value: 0.01 }, uColor: { value: new Vector4(1., 1., 1., 0.25) } },
+    uniforms: { uNormalOff: { value: 0.01 }, uTime: { value: 0 } },
     vertexShader: v_highlight,
     fragmentShader: f_highlight,
     transparent: true,
@@ -108,4 +136,22 @@ export const thread_material = new ShaderMaterial({
     transparent: true,
     blending: AdditiveBlending,
     side: DoubleSide
+});
+
+export const smoke_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_smoke,
+    fragmentShader: f_smoke,
+    transparent: true,
+    blending: AdditiveBlending,
+    side: DoubleSide
+});
+
+export const sensor_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_sensor,
+    fragmentShader: f_sensor,
+    transparent: false,
+    blending: NormalBlending,
+    vertexColors: true
 });

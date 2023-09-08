@@ -1,15 +1,15 @@
 import { clamp, outside, rand } from "../core/utils/utils.js";
 
-let prop = 0, dir = 1;
+let pct = 0, dir = 1;
 
 export function tram_update() {
     const delta = rand() * 0.1 + 0.05;
-    prop += delta * dir;
+    pct += delta * dir;
 
-    if (!outside(prop, 0, 1)) return prop;
+    if (!outside(pct, 0, 1)) return pct;
 
     dir *= -1;
-    prop = clamp(prop, 0, 1);
+    pct = clamp(pct, 0, 1);
 
-    return prop;
+    return pct;
 }

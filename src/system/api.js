@@ -13,9 +13,10 @@ const UI = {
         module_button_6: 'seismic',
         module_button_7: 'surveillance',
         module_button_8: 'patrol',
+        module_button_9: 'monitor',
+        module_button_A: 'navigator',
 
-        module_button_9: 'none',
-        module_button_A: 'none',
+        module_button_B: 'none',
     },
 
     cameraBind: {
@@ -34,35 +35,15 @@ export default function initApi(_world) {
     world = _world;
 
     UI.moduleButtons.forEach(b => b.addEventListener('click', (e) => moduleButtonClicked(e.target)));
-    // default module
-    UI.moduleButtons[0].dispatchEvent(new Event('click'));
+    UI.moduleButtons[0].dispatchEvent(new Event('click')); // default module
 
     UI.cameraButtons.forEach(b => b.addEventListener('click', (e) => cameraButtonClicked(e.target)));
-    // default camera
-    UI.cameraButtons[0].dispatchEvent(new Event('click'));
+    UI.cameraButtons[0].dispatchEvent(new Event('click')); // default camera
 }
 
 function moduleButtonClicked(btn) {
     UI.moduleButtons.forEach(b => b === btn ? b.classList.add("selected") : b.classList.remove("selected"));
-    activateModule(btn.id);
-}
-
-function activateModule(btnId) {
-    Object.keys(UI.moduleBind).forEach(a => a === btnId ? activate(UI.moduleBind[a]) : deactivate(UI.moduleBind[a]));
-}
-
-function activate(moduleName) {
-    if (!world[moduleName]) return;
-
-    world[moduleName].mesh.visible = true;
-    world.registerUpdatable(world[moduleName]);
-}
-
-function deactivate(moduleName) {
-    if (!world[moduleName]) return;
-
-    world[moduleName].mesh.visible = false;
-    world.removeUpdatable(world[moduleName]);
+    world.setModule(UI.moduleBind[btn.id]);
 }
 
 function cameraButtonClicked(btn) {
