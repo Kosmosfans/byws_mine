@@ -10,6 +10,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "办公楼",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -17,6 +18,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "车库",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -24,6 +26,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "联合建筑",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -31,6 +34,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "餐厅",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -45,6 +49,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "风硐",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -52,6 +57,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "主回风井",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -59,6 +65,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "泵房 风井",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -66,6 +73,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "煤仓",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -73,6 +81,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "主井口房",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -80,6 +89,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "副井口房",
     "cast_shadow": false,
     "receive_shadow": false
   },
@@ -87,6 +97,7 @@
     "use_bake": true,
     "texture": "/textures/ground_4k.jpg",
     "interactable": true,
+    "desc": "皮带走廊",
     "cast_shadow": false,
     "receive_shadow": false
   },

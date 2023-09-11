@@ -16,7 +16,7 @@ const UI = {
         module_button_9: 'monitor',
         module_button_A: 'navigator',
 
-        module_button_B: 'none',
+        module_button_B: 'tunnel',
     },
 
     cameraBind: {

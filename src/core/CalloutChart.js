@@ -1,12 +1,7 @@
 import {
-    BufferGeometry, CircleGeometry,
-    DoubleSide,
-    Group,
-    LineBasicMaterial, LineSegments,
-    Mesh,
-    MeshBasicMaterial,
-    PlaneGeometry,
-    Vector3
+    BufferGeometry, CanvasTexture, CircleGeometry,
+    Group, LineBasicMaterial, LineSegments,
+    Mesh, MeshBasicMaterial, PlaneGeometry, Vector3
 } from "three";
 import { outside, randomVec3 } from "./utils/utils.js";
 
@@ -14,15 +9,23 @@ const cfg = {
     frame_size: [4, 1],
     frame_pos: [1.7, 2.3, 0],
     box1: [0.5, 0.5, 0.5],
-    box2: [1, 0.5, 1]
+    box2: [1, 0.5, 1],
+    canvas_size: [256, 64]
 }
 
-let camera, meshes, frame, handle;
+let camera, meshes, frame, handle, canvas;
 
 export default class CalloutChart {
+
+    static instance;
+
     constructor(_camera) {
+        if (CalloutChart.instance) return CalloutChart.instance;
+
         camera = _camera;
         initialize()
+
+        CalloutChart.instance = this;
     }
 
     get mesh() {
@@ -33,6 +36,8 @@ export default class CalloutChart {
         keepSize();
         roam(delta);
     }
+
+    setTitle = t => renderChartFrame(t);
 }
 
 function initialize() {
@@ -44,12 +49,46 @@ function initialize() {
 
 function createFrameMesh() {
     const geom = new PlaneGeometry(cfg.frame_size[0], cfg.frame_size[1]);
-    const mat = new MeshBasicMaterial({ side: DoubleSide, transparent: true });
-    const mesh = new Mesh(geom, mat);
+    const mesh = new Mesh(geom, createFrameMaterial());
 
     mesh.position.set(cfg.frame_size[0] / 2 + cfg.frame_pos[0], cfg.frame_size[1] / 2 + cfg.frame_pos[1], 0);
 
     meshes.add(mesh);
+}
+
+function createFrameMaterial() {
+    canvas = document.createElement("canvas");
+    canvas.width = cfg.canvas_size[0];
+    canvas.height = cfg.canvas_size[1];
+
+    return new MeshBasicMaterial({
+        map: new CanvasTexture(canvas),
+        transparent: true,
+        opacity: 0.7
+    });
+}
+
+function renderChartFrame(t) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, cfg.canvas_size[0], cfg.canvas_size[1]);
+
+    // bg
+    ctx.fillStyle = "#ab684f";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(cfg.canvas_size[0] - 16, 0);
+    ctx.lineTo(cfg.canvas_size[0], 16);
+    ctx.lineTo(cfg.canvas_size[0], cfg.canvas_size[1]);
+    ctx.lineTo(0, cfg.canvas_size[1]);
+    ctx.closePath();
+    ctx.fill();
+
+    // text
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "40px hei";
+    ctx.fillText(t, 15, 45);
+
+    meshes.children[0].material.map.needsUpdate = true;
 }
 
 function createHandleMesh() {

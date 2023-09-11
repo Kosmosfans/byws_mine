@@ -17,7 +17,7 @@ export default class Navigator {
         return _mesh;
     }
 
-    tick = delta => update(delta);
+    tick = delta => _mesh.material.uniforms.uTime.value += delta;
 }
 
 function init(settings) {
@@ -55,8 +55,4 @@ function setupVelocities() {
 
 function setupVelocity(i) {
     range(6).forEach(j => _mesh.geometry.attributes.speed.array[i * 6 + j] = 1.0);
-}
-
-function update(delta) {
-    _mesh.material.uniforms.uTime.value += delta;
 }

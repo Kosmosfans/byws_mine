@@ -73,3 +73,18 @@ export function deleteObject3D(obj) {
     obj.geometry.dispose();
     obj.material.dispose();
 }
+
+export function calcPlaneWith2EndPoint(a, b, width) {
+    const ba = b.clone().sub(a);
+    const len = ba.length();
+
+    const axisY = new Vector3(0, 1, 0);
+    const normal = axisY.cross(ba).normalize().multiplyScalar(width);
+
+    const a0 = a.clone().sub(normal);
+    const a1 = a.clone().add(normal);
+    const b0 = b.clone().sub(normal);
+    const b1 = b.clone().add(normal);
+
+    return { a0, a1, b0, b1, len };
+}

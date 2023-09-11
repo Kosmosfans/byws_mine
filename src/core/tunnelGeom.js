@@ -1,5 +1,5 @@
 import { BufferGeometry, Float32BufferAttribute, Vector3 } from "three";
-import { convertCoordsFromGLTFToThree } from "./utils/utils.js";
+import { calcPlaneWith2EndPoint, convertCoordsFromGLTFToThree } from "./utils/utils.js";
 
 let positions, uvs, width;
 
@@ -27,7 +27,7 @@ function tunnelGeometry(t, convertCoords) {
     const a = convertCoords ? convertCoordsFromGLTFToThree(t.start) : new Vector3(t.start.x, t.start.y, t.start.z);
     const b = convertCoords ? convertCoordsFromGLTFToThree(t.end) : new Vector3(t.end.x, t.end.y, t.end.z);
 
-    const { a0, a1, b0, b1, len } = calcTunnelPlane(a, b);
+    const { a0, a1, b0, b1, len } = calcPlaneWith2EndPoint(a, b, width);
 
     positions.push(a1.x, a1.y, a1.z);
     positions.push(a0.x, a0.y, a0.z);
@@ -44,19 +44,4 @@ function tunnelGeometry(t, convertCoords) {
     uvs.push(0, len);
     uvs.push(1, len);
     uvs.push(1, 0);
-}
-
-function calcTunnelPlane(a, b) {
-    const ba = b.clone().sub(a);
-    const len = ba.length();
-
-    const axisY = new Vector3(0, 1, 0);
-    const normal = axisY.cross(ba).normalize().multiplyScalar(width);
-
-    const a0 = a.clone().sub(normal);
-    const a1 = a.clone().add(normal);
-    const b0 = b.clone().sub(normal);
-    const b1 = b.clone().add(normal);
-
-    return { a0, a1, b0, b1, len };
 }

@@ -1,6 +1,6 @@
 import AirFlow from "../core/AirFlow.js";
 import {
-    billowing_material,
+    billowing_material, cloud3d_material,
     cloud_material,
     drop_material,
     flame_material, navigator_material,
@@ -45,5 +45,10 @@ export function initBillowingStyleFlow(world) {
 
 export function initNavigatorStyleFlow(world) {
     const settings = { width: 0.16, material: navigator_material, palette: palette6 };
+    return createAirFlow(world, settings);
+}
+
+export function initCloud3dStyleFlow(world) {
+    const settings = { width: 0.2, material: cloud3d_material, palette: palette6 };
     return createAirFlow(world, settings);
 }

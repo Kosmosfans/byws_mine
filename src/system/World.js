@@ -6,7 +6,7 @@ import initRenderer from './renderer.js';
 import initContainer from "./container";
 import initLoop from './Loop.js';
 import initGltfClips from "./clips.js";
-import initInteraction from "./Interaction.js";
+import initInteraction from "../components/interactions.js";
 
 import initModels from "../components/models.js";
 import { initCloudStyleFlow } from "../components/airFlows.js";
@@ -23,6 +23,7 @@ import initPatrol from "../components/patrols.js";
 import initMonitor from "../components/monitors";
 import initNavigator from "../components/navigators.js";
 import initShaderObjs from "../components/shaderObjs.js";
+import initTunnelDetail from "../components/tunnelDetails.js";
 
 const modules = {
     'flow': { 'loader': initCloudStyleFlow },
@@ -35,6 +36,7 @@ const modules = {
     'patrol': { 'loader': initPatrol },
     'monitor': { 'loader': initMonitor },
     'navigator': { 'loader': initNavigator },
+    'tunnel': { 'loader': initTunnelDetail }
 }
 
 export default class World {
@@ -98,21 +100,21 @@ function initStaticAnimations(world) {
 
 function initControls(world) {
     initTriggers(world);
-    initInteraction(world);
+    world.interaction = initInteraction(world);
     initApi(world);
 }
 
 function activateModule(world, id) {
     if (!modules[id]) return;
-    if (!modules[id].module) modules[id].module = modules[id].loader(world);
+    if (!modules[id].instance) modules[id].instance = modules[id].loader(world);
 
-    world.add(modules[id].module.mesh);
-    world.registerUpdatable(modules[id].module);
+    world.add(modules[id].instance.mesh);
+    world.registerUpdatable(modules[id].instance);
 }
 
 function deactivateModule(world, id) {
-    if (!modules[id] || !modules[id].module) return;
+    if (!modules[id] || !modules[id].instance) return;
 
-    world.remove(modules[id].module.mesh);
-    world.removeUpdatable(modules[id].module);
+    world.remove(modules[id].instance.mesh);
+    world.removeUpdatable(modules[id].instance);
 }

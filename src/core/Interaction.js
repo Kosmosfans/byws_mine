@@ -1,13 +1,12 @@
 import { Raycaster, Vector2 } from "three";
 import MESH_ATTR from '/src/cfg/mesh_attr.json' assert { type: 'JSON' };
-import Highlight from "../core/Highlight.js";
-import initCallout from "../components/callouts";
+import Highlight from "./Highlight.js";
 
 let camera, scene, callout, highlighter;
 let mouse, rayCaster, currentPick;
-let needCheck, intractable;
+let needCheck, interactables;
 
-class Interaction {
+export default class Interaction {
     constructor(_camera, _scene, _callout) {
         camera = _camera;
         scene = _scene;
@@ -42,13 +41,18 @@ function checkInteraction() {
 }
 
 function initInteractableMeshes() {
-    intractable = [];
-    scene.traverse(m => MESH_ATTR[m.name] && MESH_ATTR[m.name]['interactable'] ? intractable.push(m) : {});
+    interactables = [];
+
+    scene.traverse(mesh => {
+        if (!MESH_ATTR[mesh.name] || !MESH_ATTR[mesh.name].interactable) return null;
+        mesh.userData.desc = MESH_ATTR[mesh.name].desc;
+        interactables.push(mesh);
+    })
 }
 
 function checkMousePick() {
     rayCaster.setFromCamera(mouse, camera);
-    const intersects = rayCaster.intersectObjects(intractable);
+    const intersects = rayCaster.intersectObjects(interactables);
     return intersects.length > 0 ? intersects[0].object : null;
 }
 
@@ -71,23 +75,10 @@ function clear() {
 
 function setupListeners() {
     document.addEventListener('pointermove', (event) => onMouseMove(event));
-    document.addEventListener('click', (event) => onClick(event));
 }
 
 function onMouseMove(event) {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     needCheck = true;
-}
-
-function onClick() {
-    // const panel = document.querySelector(".info-panel");
-    // currentPicked ? panel.style.right = '0' : panel.style.right = '-33%';
-}
-
-export default function initInteraction(world) {
-    const callout = initCallout(world);
-    const interaction = new Interaction(world.camera, world.scene, callout);
-
-    world.registerUpdatable(interaction);
 }

@@ -30,6 +30,8 @@ import f_smoke from "../shaders/smoke.frag";
 import v_jet from "../shaders/jet.vert";
 import f_jet from "../shaders/jet.frag";
 
+import f_cloud3d from "../shaders/flow_cloud3d.frag";
+
 export const cloud_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: v_flow,
@@ -153,5 +155,14 @@ export const sensor_material = new ShaderMaterial({
     fragmentShader: f_sensor,
     transparent: false,
     blending: NormalBlending,
+    vertexColors: true
+});
+
+export const cloud3d_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: v_flow,
+    fragmentShader: f_cloud3d,
+    transparent: true,
+    blending: AdditiveBlending,
     vertexColors: true
 });
