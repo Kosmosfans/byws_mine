@@ -1,4 +1,3 @@
-import World from "./system/World.js";
+import api from "./system/api.js";
 
-const world = new World();
-world.init().then(() => world.start());
+api.startApp();

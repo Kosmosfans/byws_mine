@@ -7,6 +7,9 @@ varying vec3 vColor;
 varying float vSpeed;
 
 void main() {
+    float border = 1. - 2. * abs(vUv.x - 0.5);
+    if (border < 0.35) discard;
+
     float id = floor(vUv.y * 3.);
     vec2 uv = vec2(vUv.x, fract(vUv.y * 3.));
 

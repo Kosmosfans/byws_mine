@@ -1,4 +1,4 @@
-import tunnel_raw from "../cfg/tunnels.json" assert { type: "JSON" };
+import tunnel_raw from "../config/tunnels.json" assert { type: "JSON" };
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Group, Mesh, MeshBasicMaterial, PlaneGeometry, Raycaster, Vector2 } from "three";
 import { highlight_material } from "./shaderMaterials.js";
@@ -99,6 +99,7 @@ function fitHighlighter(i) {
     const tunnel = tunnel_raw[tunnelData[i]];
     const start = convertCoordsFromGLTFToThree(tunnel.start);
     const end = convertCoordsFromGLTFToThree(tunnel.end);
+
     const { a0, a1, b0, b1 } = calcPlaneWith2EndPoint(start, end, width);
 
     highlighter.geometry.attributes.position.array[0] = a0.x;

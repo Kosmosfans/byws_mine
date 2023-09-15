@@ -9,8 +9,7 @@ const tram_end = new Vector3().lerpVectors(tunnel_top, tunnel_bottom, 0.98);
 
 export default function initTrams(world) {
     const mesh = world.gltf.scene.getObjectByName('tram');
-    const tram = new Tram(mesh, tram_start, tram_end);
+    mesh.visible = true;
 
-    world.registerUpdatable(tram);
-    return tram;
+    return new Tram(mesh, tram_start, tram_end);
 }

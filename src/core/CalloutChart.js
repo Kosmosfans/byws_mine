@@ -21,11 +21,10 @@ export default class CalloutChart {
 
     constructor(_camera) {
         if (CalloutChart.instance) return CalloutChart.instance;
+        CalloutChart.instance = this;
 
         camera = _camera;
         initialize()
-
-        CalloutChart.instance = this;
     }
 
     get mesh() {

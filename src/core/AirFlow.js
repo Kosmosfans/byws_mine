@@ -1,12 +1,12 @@
-import tunnels from '/src/cfg/tunnels.json' assert { type: 'JSON' };
+import tunnels from '/src/config/tunnels.json' assert { type: 'JSON' };
 
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Mesh } from "three";
 import { cloud_material } from "./shaderMaterials.js";
-import { palette1 } from "./palettes.js";
+import palettes from "./palettes.js";
 import { range } from "./utils/utils.js";
 
-let _mesh, palette, material, width;
+let _mesh, palette, materials, width;
 
 export default class AirFlow {
     constructor(data, settings = {}) {
@@ -17,13 +17,18 @@ export default class AirFlow {
         return _mesh;
     }
 
+    setMaterial(i) {
+        _mesh.material = materials[i];
+        _mesh.material.needsUpdate = true;
+    }
+
     tick = delta => update(delta);
 }
 
 function init(data, settings) {
     width = settings['width'] || 0.2;
-    material = settings['material'] || cloud_material;
-    palette = settings['palette'] || palette1;
+    materials = settings['materials'] || [cloud_material];
+    palette = settings['palette'] || palettes.palette1;
 
     _mesh = createMesh();
 
@@ -33,7 +38,7 @@ function init(data, settings) {
 
 function createMesh() {
     const geom = createTunnelGeometry(tunnels, width);
-    return new Mesh(geom, material);
+    return new Mesh(geom, materials[0]);
 }
 
 function update(delta) {

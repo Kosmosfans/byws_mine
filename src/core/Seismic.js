@@ -1,4 +1,4 @@
-import geophone_locations from "../cfg/geophone_locations.json" assert { type: 'JSON' };
+import geophone_locations from "../config/geophone_locations.json" assert { type: 'JSON' };
 import seismicMesh from "./seismicMesh";
 import { distance, clamp } from "./utils/utils.js";
 import { Color } from "three";

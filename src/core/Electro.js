@@ -1,9 +1,9 @@
-import tunnels from '/src/cfg/electro_paths.json' assert { type: 'JSON' };
+import tunnels from '/src/config/electro_paths.json' assert { type: 'JSON' };
 
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Mesh } from "three";
 import { electro_material } from "./shaderMaterials.js";
-import { palette6 } from "./palettes.js";
+import palettes from "./palettes.js";
 import { rand, range } from "./utils/utils.js";
 
 let _mesh, width, palette;
@@ -17,12 +17,12 @@ export default class Electro {
         return _mesh;
     }
 
-    tick = delta => update(delta);
+    tick = delta => _mesh.material.uniforms.uTime.value += delta;
 }
 
 function init(settings) {
-    width = settings['width'] || 0.5;
-    palette = palette6;
+    width = settings.width || 0.5;
+    palette = settings.palette || palettes.palette6;
 
     _mesh = createMesh();
     setupColors();
@@ -41,14 +41,9 @@ function setupColors() {
 function setupColor(i) {
     const color = palette.getColor(rand(0.15, 0.2), false, false);
 
-    // 6 vertices per tunnel, 3 color components per vertex
     range(6).forEach(j => {
         _mesh.geometry.attributes.color.array[i * 18 + j * 3] = color[0];
         _mesh.geometry.attributes.color.array[i * 18 + j * 3 + 1] = color[1];
         _mesh.geometry.attributes.color.array[i * 18 + j * 3 + 2] = color[2];
     });
-}
-
-function update(delta) {
-    _mesh.material.uniforms.uTime.value += delta;
 }

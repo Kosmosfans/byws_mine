@@ -1,4 +1,4 @@
-import patrol_paths from "../cfg/patrol_paths.json" assert { type: "JSON" };
+import patrol_paths from "../config/patrol_paths.json" assert { type: "JSON" };
 
 import {
     Group,

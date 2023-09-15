@@ -7,10 +7,10 @@ export default class Callout {
 
     constructor(camera) {
         if (Callout.instance) return Callout.instance;
+        Callout.instance = this;
 
         this.chart = new CalloutChart(camera);
         this.clear();
-        Callout.instance = this;
     }
 
     get mesh() {

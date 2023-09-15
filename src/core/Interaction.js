@@ -1,10 +1,10 @@
 import { Raycaster, Vector2 } from "three";
-import MESH_ATTR from '/src/cfg/mesh_attr.json' assert { type: 'JSON' };
+import MESH_ATTR from '/src/config/mesh_attr.json' assert { type: 'JSON' };
 import Highlight from "./Highlight.js";
 
 let camera, scene, callout, highlighter;
 let mouse, rayCaster, currentPick;
-let needCheck, interactables;
+let needCheck, interactables, enabled;
 
 export default class Interaction {
     constructor(_camera, _scene, _callout) {
@@ -16,8 +16,18 @@ export default class Interaction {
     }
 
     tick(delta) {
+        if (!enabled) return;
+
         checkInteraction();
         highlighter.tick(delta);
+    }
+
+    enable() {
+        enabled = true;
+    }
+
+    disable() {
+        enabled = false;
     }
 }
 
@@ -28,6 +38,8 @@ function init() {
     initInteractableMeshes();
     highlighter = new Highlight();
     setupListeners();
+
+    enabled = true;
 }
 
 function checkInteraction() {
@@ -53,7 +65,7 @@ function initInteractableMeshes() {
 function checkMousePick() {
     rayCaster.setFromCamera(mouse, camera);
     const intersects = rayCaster.intersectObjects(interactables);
-    return intersects.length > 0 ? intersects[0].object : null;
+    return intersects.length > 0 && intersects[0].object.visible ? intersects[0].object : null;
 }
 
 function highlight(object) {

@@ -1,5 +1,4 @@
 import CameraControls from "camera-controls";
-import camera_status from "/src/cfg/camera_status.json" assert { type: 'JSON' };
 
 import {
     Vector2,
@@ -50,8 +49,7 @@ export default function initCameraControl(world) {
     return cc;
 }
 
-export function setCamera(type) {
-    const cs = camera_status[type];
-    cc.setLookAt(cs['px'], cs['py'], cs['pz'], cs['tx'], cs['ty'], cs['tz'], true).then();
-    cc.zoomTo(cs.zoom, true).then();
+export function setCamera(status) {
+    cc.setLookAt(status['px'], status['py'], status['pz'], status['tx'], status['ty'], status['tz'], true).then();
+    cc.zoomTo(status.zoom, true).then();
 }

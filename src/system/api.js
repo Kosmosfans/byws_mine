@@ -1,52 +1,69 @@
-import { setCamera } from "./controls2.js";
+import scenarios from "./scenarios.js";
+import World from "./World.js";
+import modules from "./modules.js";
+import ui from "./ui.js";
+import initInteraction from "../modules/interactions";
+import { setCamera } from "./cc.js";
 
-const UI = {
-    moduleButtons: Array.from(document.getElementsByClassName('module')),
-    cameraButtons: Array.from(document.getElementsByClassName('camera')),
+let world, interaction;
 
-    moduleBind: {
-        module_button_1: 'flow',
-        module_button_2: 'personnel',
-        module_button_3: 'coal',
-        module_button_4: 'tram',
-        module_button_5: 'electro',
-        module_button_6: 'seismic',
-        module_button_7: 'surveillance',
-        module_button_8: 'patrol',
-        module_button_9: 'monitor',
-        module_button_A: 'navigator',
+function startApp() {
+    world = new World();
 
-        module_button_B: 'tunnel',
-    },
-
-    cameraBind: {
-        camera_button_1: 'default',
-        camera_button_2: 'surface',
-        camera_button_3: 'layer-1',
-        camera_button_4: 'layer-2',
-        camera_button_5: 'top-view',
-        camera_button_6: 'default',
-    }
+    world.init().then(() => {
+        world.start();
+        initControls();
+    });
 }
 
-let world;
-
-export default function initApi(_world) {
-    world = _world;
-
-    UI.moduleButtons.forEach(b => b.addEventListener('click', (e) => moduleButtonClicked(e.target)));
-    UI.moduleButtons[0].dispatchEvent(new Event('click')); // default module
-
-    UI.cameraButtons.forEach(b => b.addEventListener('click', (e) => cameraButtonClicked(e.target)));
-    UI.cameraButtons[0].dispatchEvent(new Event('click')); // default camera
+function initControls() {
+    ui.init();
+    interaction = initInteraction(world);
 }
 
-function moduleButtonClicked(btn) {
-    UI.moduleButtons.forEach(b => b === btn ? b.classList.add("selected") : b.classList.remove("selected"));
-    world.setModule(UI.moduleBind[btn.id]);
+function enableInteraction() {
+    interaction ? interaction.enable() : {};
 }
 
-function cameraButtonClicked(btn) {
-    const type = UI.cameraBind[btn.id];
-    setCamera(type);
+function disableInteraction() {
+    interaction ? interaction.disable() : {};
+}
+
+function setModule(id) {
+    modules.setModule(id, world);
+}
+
+function setScenario(id) {
+    scenarios.setScenario(id, world);
+}
+
+function setCameraState(state) {
+    setCamera(state);
+}
+
+function showStratumLayer(i) {
+    const ct = modules.getModule('ct');
+    ct ? ct.showLayer(i) : {};
+}
+
+function hideStratumLayer(i) {
+    const ct = modules.getModule('ct');
+    ct ? ct.hideLayer(i) : {};
+}
+
+function setFlowMaterial(i) {
+    const flow = modules.getModule('air');
+    flow ? flow.setMaterial(i) : {};
+}
+
+export default {
+    startApp,
+    setCameraState,
+    setModule,
+    setScenario,
+    enableInteraction,
+    disableInteraction,
+    showStratumLayer,
+    hideStratumLayer,
+    setFlowMaterial
 }

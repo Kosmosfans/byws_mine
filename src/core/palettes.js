@@ -18,49 +18,60 @@ function interpolateTurbo(x) {
     ].map(a => a / 256);
 }
 
-export const palette0 = {
+const palette0 = {
     getColor: interpolateTurbo
 }
 
-export const palette1 = {
+const palette1 = {
     getColor: t => cosinePalette([0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [1.0, 1.0, 0.5], [0.8, 0.9, 0.3])(t)
 }
 
-export const palette2 = {
+const palette2 = {
     getColor: t => cosinePalette([0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [1.0, 1.0, 1.0], [0.00, 0.10, 0.20])(t)
 }
 
-export const palette3 = {
+const palette3 = {
     getColor: (t, f1, f2) => {
         const palette = cosinePalette([0.09, 1.00, 0.37], [0.28, 0.50, 0.90], [0.08, 0.25, 0.48], [0.91, 0.16, 0.16]);
         return f1 ? [1, 0, 0] : (f2 ? [0, 0, 0] : palette(t));
     }
 }
 
-export const palette4 = {
+const palette4 = {
     getColor: (t, f1, f2) => {
         const palette = cosinePalette([0.01, 0.11, 0.05], [0.93, 0.92, 0.45], [0.81, 0.77, 0.82], [0.85, 0.67, 0.62]);
         return f2 ? [0, 0, 0] : palette(t);
     }
 }
 
-export const palette5 = {
+const palette5 = {
     getColor: (t, f1, f2) => {
         const palette = cosinePalette([0.43, 0.78, 0.02], [0.29, 0.11, 0.68], [0.94, 0.37, 0.92], [0.07, 0.36, 0.40]);
         return f2 ? [0, 0, 0] : palette(t);
     }
 }
 
-export const palette6 = {
+const palette6 = {
     getColor: (t, f1, f2) => {
         const palette = cosinePalette([0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [1, 1, 1], [0.263, 0.416, 0.557]);
         return f2 ? [0, 0, 0] : palette(t);
     }
 }
 
-export const palette7 = {
+const palette7 = {
     getColor: (t) => {
         const palette = cosinePalette([0.21, 0.28, 0.00], [0.60, 0.90, 0.20], [0.40, 0.13, 0.04], [0.58, 0.40, 0.60]);
         return palette(t);
     }
+}
+
+export default {
+    palette0,
+    palette1,
+    palette2,
+    palette3,
+    palette4,
+    palette5,
+    palette6,
+    palette7
 }

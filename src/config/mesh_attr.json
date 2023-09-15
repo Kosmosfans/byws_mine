@@ -114,5 +114,34 @@
     "interactable": false,
     "cast_shadow": false,
     "receive_shadow": false
+  },
+  "layer01": {
+    "use_bake": true,
+    "texture": "/textures/stratum01_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "layer02": {
+    "use_bake": true,
+    "texture": "/textures/stratum01_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "layer03": {
+    "use_bake": true,
+    "texture": "/textures/stratum02_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
+  },
+  "layer04": {
+    "use_bake": true,
+    "texture": "/textures/stratum02_4k.jpg",
+    "interactable": false,
+    "cast_shadow": false,
+    "receive_shadow": false
   }
+
 }

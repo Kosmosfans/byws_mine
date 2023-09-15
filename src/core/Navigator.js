@@ -1,9 +1,9 @@
-import tunnels from '/src/cfg/navigator_paths.json' assert { type: 'JSON' };
+import tunnels from '/src/config/navigator_paths.json' assert { type: 'JSON' };
 
 import createTunnelGeometry from "./tunnelGeom.js";
 import { Mesh } from "three";
 import { navigator_material } from "./shaderMaterials.js";
-import { palette6 } from "./palettes.js";
+import palettes from "./palettes.js";
 import { range } from "./utils/utils.js";
 
 let _mesh, width, palette;
@@ -21,8 +21,8 @@ export default class Navigator {
 }
 
 function init(settings) {
-    width = settings['width'] || 0.2;
-    palette = palette6;
+    width = settings.width || 0.2;
+    palette = settings.palette || palettes.palette6;
 
     _mesh = createMesh();
     setupColors();

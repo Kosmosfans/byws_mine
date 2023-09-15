@@ -1,4 +1,4 @@
-import geophone_locations from "../cfg/geophone_locations.json" assert { type: 'JSON' };
+import geophone_locations from "../config/geophone_locations.json" assert { type: 'JSON' };
 import { Group, IcosahedronGeometry, InstancedMesh, Mesh, MeshBasicMaterial } from "three";
 import { range } from "./utils/utils.js";
 

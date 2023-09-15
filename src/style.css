@@ -5,7 +5,7 @@ body {
 
     text-align: center;
     font-size: 12px;
-    font-family: Sans-Serif, serif;
+    font-family: monospace;
 
     /* color text */
     color: #444;
@@ -19,18 +19,39 @@ body {
     background-color: #000;
 }
 
+.separation {
+    position: relative;
+    border: none;
+    width: 14px;
+    height: 10px;
+    visibility: hidden;
+}
+
 /* buttons */
+
 #module_menu {
     position: absolute;
     top: 28px;
     left: 28px;
+    /*border: 1px white solid;*/
+}
 
+#function_menu {
+    position: absolute;
+    top: 140px;
+    left: 28px;
+
+    display: flex;
+    flex-direction: column;
+
+    visibility: hidden;
 }
 
 #camera_menu {
     position: absolute;
     top: 28px;
     right: 28px;
+    visibility: hidden;
     /*border: 1px white solid;*/
 }
 
@@ -39,25 +60,54 @@ body {
     border: none;
     width: 24px;
     height: 24px;
-    margin: 1px;
+    margin-right: -2px;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    color: rgba(255, 255, 255, 0.35);
-    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 3px;
+    transition: background .3s;
+}
+.button2 {
+    position: relative;
+    border: none;
+    width: 80px;
+    height: 12px;
+    padding-top: 0;
+    padding-left: 4px;
+    margin-top: 3px;
+
+    font-family: Tahoma, serif;
+    font-size: 8px;
+    text-align: left;
+
+    color: #909090;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 1px;
     transition: background .3s;
 }
 .button:hover {
     color: #181818;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.5);
 }
+
+.button2:hover {
+    color: #181818;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .button:active {
-    top:0.08em;
+    top: 0.08em;
 }
+
+.button2:active {
+    top: 0.08em;
+}
+
 .selected {
     color: #181818;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .svg-icon {
@@ -74,5 +124,22 @@ body {
     width: 16px;
     height: 16px;
 
-    fill: rgba(255, 255, 255, 0.2);
+    fill: rgba(255, 255, 255, 0.1);
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: rgba(0,0,0, 0.05);
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px 10px;
+
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

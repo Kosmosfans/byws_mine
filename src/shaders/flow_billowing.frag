@@ -8,12 +8,12 @@ varying float vSpeed;
 
 void main() {
     float border = 1. - 2. * abs(vUv.x - 0.5);
-    if (border < 0.5) discard;
+    if (border < 0.55) discard;
 
     const float nscale = 0.5;
     vec2 uv = nscale * (vUv - 0.5);
     uv.y *= 2.;
-    uv.y += vSpeed * uTime * 2.0;
+    uv.y -= vSpeed * uTime * 2.0;
 
     const vec2 period = vec2(0., 0.);
     float rot = uTime * .5;

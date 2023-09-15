@@ -1,4 +1,4 @@
-import surveillance_locations from "../cfg/surveillance_locations.json" assert { type: 'JSON' };
+import surveillance_locations from "../config/surveillance_locations.json" assert { type: 'JSON' };
 import { rand, randInt, range } from "../core/utils/utils.js";
 
 export function surveillance_init() {
