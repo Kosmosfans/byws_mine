@@ -11,7 +11,7 @@ const uiCameraGroup = Array.from($$('camera'));
 const uiModuleGroup = Array.from($$('module'));
 const uiFunctionGroup = Array.from($$('function'));
 
-const buttonBinding = {
+const buttonBind = {
     'module_btn_air': module_btn_air_clicked,
     'module_btn_personnel': module_btn_personnel_clicked,
     'module_btn_coal': module_btn_coal_clicked,
@@ -38,8 +38,12 @@ const buttonBinding = {
 }
 
 function init() {
-    uiModuleGroup.forEach(b => b.addEventListener('click', () => buttonBinding[b.id].call()));
-    uiFunctionGroup.forEach(b => b.addEventListener('click', () => buttonBinding[b.id].call()));
+    uiModuleGroup.forEach(b => b.addEventListener('click', () => buttonBind[b.id].call()));
+
+    uiFunctionGroup.filter(v => buttonBind[v.id]).forEach(b => b.addEventListener('click', () => buttonBind[b.id].call()));
+    $('function_slider_ct_1').addEventListener('input', e => function_slider_ct_1_changed(e));
+    $('function_slider_ct_2').addEventListener('input', e => function_slider_ct_2_changed(e));
+
     uiCameraGroup.forEach(b => b.addEventListener('click', e => cameraBtnClicked(e.target)));
 
     setDefaultState();
@@ -164,9 +168,10 @@ function module_btn_detail_clicked() {
 function module_btn_ct_clicked() {
     uiModuleGroup.forEach(b => b.id === 'module_btn_ct' ? b.classList.add('selected') : b.classList.remove('selected'));
     uiCameraMenu.style.visibility = 'hidden';
-    const sub = ['function_btn_ct_1', 'function_btn_ct_2', 'function_btn_ct_3', 'function_btn_ct_4'];
+    const sub = ['function_btn_ct_1', 'function_btn_ct_2', 'function_btn_ct_3', 'function_btn_ct_4', 'function_slider_ct_1', 'function_slider_ct_2'];
     uiFunctionGroup.forEach(b => sub.includes(b.id) ? b.style.display = 'inline' : b.style.display = 'none');
     uiFunctionMenu.style.visibility = 'visible';
+    api.enableClipping();
     api.setScenario('stratum');
     api.setModule('ct');
     api.disableInteraction();
@@ -176,6 +181,7 @@ function module_btn_seismic_clicked() {
     uiModuleGroup.forEach(b => b.id === 'module_btn_seismic' ? b.classList.add('selected') : b.classList.remove('selected'));
     uiCameraMenu.style.visibility = 'hidden';
     uiFunctionMenu.style.visibility = 'hidden';
+    api.disableClipping();
     api.setScenario('stratum');
     api.setModule('seismic');
     api.disableInteraction();
@@ -233,3 +239,12 @@ function function_btn_ct_4_clicked() {
     selected ? api.hideStratumLayer(3) : api.showStratumLayer(3);
 }
 
+function function_slider_ct_1_changed(e) {
+    const pct = e.target.value / e.target.max;
+    api.ctClippingX(pct);
+}
+
+function function_slider_ct_2_changed(e) {
+    const pct = e.target.value / e.target.max;
+    api.ctClippingZ(pct);
+}

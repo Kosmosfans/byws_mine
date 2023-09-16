@@ -1,11 +1,7 @@
 import Ct from "../core/Ct.js";
+import scenarios from "../system/scenarios.js";
 
-export default function initCt(world) {
-    const list = [];
-    list.push(world.scene.getObjectByName('layer01'));
-    list.push(world.scene.getObjectByName('layer02'));
-    list.push(world.scene.getObjectByName('layer03'));
-    list.push(world.scene.getObjectByName('layer04'));
-
-    return new Ct(list);
+export default function initCt() {
+    const stratum = scenarios.getMeshes('stratum')[0];
+    return new Ct(stratum);
 }

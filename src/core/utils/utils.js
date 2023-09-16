@@ -88,3 +88,7 @@ export function calcPlaneWith2EndPoint(a, b, width) {
 
     return { a0, a1, b0, b1, len };
 }
+
+export function lerp(a, b, alpha) {
+    return a + alpha * (b - a);
+}

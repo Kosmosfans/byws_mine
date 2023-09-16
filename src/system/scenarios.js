@@ -8,6 +8,7 @@ let active;
 export default {
     addMesh,
     setScenario,
+    getMeshes,
 }
 
 function addMesh(id, mesh) {
@@ -29,4 +30,8 @@ function close(id, world) {
 
     scenarios[id].meshes.forEach(m => world.remove(m));
     active = null;
+}
+
+function getMeshes(id) {
+    return scenarios[id].meshes;
 }

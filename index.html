@@ -29,7 +29,7 @@
 
         <button class="separation"></button>
 
-        <button class="button module" id="module_btn_ct" title="地层"><svg class="svg-icon" viewBox="1 1 14 14" focusable="false"><g> <path class="cls-1" d="M3.55539,9.54578l.88893-.44446,5.33352,2.66676,1.77784-.88935.88893.448v1.32983L9.77784,13.99038,3.55539,10.87916Zm0-6.222L6.22216,1.99038l6.22245,3.11123V6.435L9.77784,7.76837,3.55539,4.65715Zm0,3.11079.88893-.44446L9.77784,8.65686l1.77784-.88936.88893.448V9.54535L9.77784,10.87916,3.55539,7.76794Z"></path> </g></svg></button>
+        <button class="button module" id="module_btn_ct" title="地层剖面"><svg class="svg-icon" viewBox="1 1 14 14" focusable="false"><g> <path class="cls-1" d="M3.55539,9.54578l.88893-.44446,5.33352,2.66676,1.77784-.88935.88893.448v1.32983L9.77784,13.99038,3.55539,10.87916Zm0-6.222L6.22216,1.99038l6.22245,3.11123V6.435L9.77784,7.76837,3.55539,4.65715Zm0,3.11079.88893-.44446L9.77784,8.65686l1.77784-.88936.88893.448V9.54535L9.77784,10.87916,3.55539,7.76794Z"></path> </g></svg></button>
         <button class="button module" id="module_btn_seismic" title="微震监测"><svg class="svg-icon" viewBox="0 0 512 512" focusable="false"><g> <path class="st0" d="M256.008,0.008C114.849,0.008,0,114.833,0,256c0,141.158,114.849,255.992,256.008,255.992 C397.16,511.992,512,397.159,512,256C512,114.833,397.16,0.008,256.008,0.008z M256.008,460.794 c-112.921,0-204.802-91.881-204.802-204.794c0-112.912,91.88-204.802,204.802-204.802c112.92,0,204.786,91.89,204.786,204.802 C460.794,368.913,368.928,460.794,256.008,460.794z"></path> <path class="st0" d="M256.008,102.397c-84.698,0-153.612,68.905-153.612,153.603c0,84.69,68.913,153.587,153.612,153.587 c84.683,0,153.595-68.896,153.595-153.587C409.603,171.302,340.691,102.397,256.008,102.397z M256.008,358.405 c-56.468,0-102.405-45.937-102.405-102.405c0-56.452,45.937-102.405,102.405-102.405c56.46,0,102.388,45.952,102.388,102.405 C358.397,312.469,312.468,358.405,256.008,358.405z"></path> <path class="st0" d="M256.008,204.809c-28.287,0-51.215,22.92-51.215,51.191c0,28.271,22.928,51.19,51.215,51.19 c28.279,0,51.198-22.92,51.198-51.19C307.207,227.73,284.287,204.809,256.008,204.809z"></path></g></svg></button>
 
     </div>
@@ -45,15 +45,24 @@
     </div>
 
     <div id="function_menu">
-        <button class="button2 function air" id="function_btn_air_1" title="流样式">STREAM STYLE</button>
-        <button class="button2 function air" id="function_btn_air_2" title="云样式">CLOUD STYLE</button>
-        <button class="button2 function air" id="function_btn_air_3" title="粒子样式">PARTICLE STYLE</button>
-        <button class="button2 function air" id="function_btn_air_4" title="导航样式">NAVI STYLE</button>
+        <button class="button2 function air" id="function_btn_air_1">STREAM STYLE</button>
+        <button class="button2 function air" id="function_btn_air_2">CLOUD STYLE</button>
+        <button class="button2 function air" id="function_btn_air_3">PARTICLE STYLE</button>
+        <button class="button2 function air" id="function_btn_air_4">NAVI STYLE</button>
 
         <button class="button2 function ct" id="function_btn_ct_1" title="地层1">STRATUM PS-1</button>
         <button class="button2 function ct" id="function_btn_ct_2" title="地层2">STRATUM SS-2</button>
         <button class="button2 function ct" id="function_btn_ct_3" title="地层3">LAYER TPS 01</button>
         <button class="button2 function ct" id="function_btn_ct_4" title="地层4">LAYER S144</button>
+
+        <button class="separation"></button>
+        <button class="separation"></button>
+        <button class="separation"></button>
+
+        <input class="slider function ct" id="function_slider_ct_1" type="range" min="0" max="1000" value="1000"/><label for="function_slider_ct_1"></label>
+        <button class="separation"></button>
+        <input class="slider function ct" id="function_slider_ct_2" type="range" min="0" max="1000" value="0"/><label for="function_slider_ct_2"></label>
+
     </div>
 </body>
 </html>

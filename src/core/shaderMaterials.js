@@ -1,4 +1,4 @@
-import { AdditiveBlending, DoubleSide, NormalBlending, ShaderMaterial } from "three";
+import { AdditiveBlending, DoubleSide, NormalBlending, ShaderMaterial, Vector2, Vector3 } from "three";
 
 import v_flow from "../shaders/flow.vert";
 import f_cloud from "../shaders/flow_cloud.frag";
@@ -31,6 +31,7 @@ import v_jet from "../shaders/jet.vert";
 import f_jet from "../shaders/jet.frag";
 
 import f_cloud3d from "../shaders/flow_cloud3d.frag";
+import f_ct from "../shaders/ct.frag";
 
 export const cloud_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
@@ -135,6 +136,15 @@ export const thread_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: v_thread,
     fragmentShader: f_thread,
+    transparent: true,
+    blending: AdditiveBlending,
+    side: DoubleSide
+});
+
+export const ct_material = new ShaderMaterial({
+    uniforms: { uTime: { value: 0 }, uSize: { value: new Vector2() }, uColor: { value: new Vector3() } },
+    vertexShader: v_thread,
+    fragmentShader: f_ct,
     transparent: true,
     blending: AdditiveBlending,
     side: DoubleSide

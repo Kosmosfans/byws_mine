@@ -7,18 +7,15 @@ import { setCamera } from "./cc.js";
 
 let world, interaction;
 
-function startApp() {
+function start() {
     world = new World();
-
-    world.init().then(() => {
-        world.start();
-        initControls();
-    });
+    world.init().then(() => startApp());
 }
 
-function initControls() {
-    ui.init();
+function startApp() {
+    world.start();
     interaction = initInteraction(world);
+    ui.init();
 }
 
 function enableInteraction() {
@@ -56,8 +53,26 @@ function setFlowMaterial(i) {
     flow ? flow.setMaterial(i) : {};
 }
 
+function enableClipping() {
+    world.renderer.localClippingEnabled = true;
+}
+
+function disableClipping() {
+    world.renderer.localClippingEnabled = false;
+}
+
+function ctClippingX(pct) {
+    const ct = modules.getModule('ct');
+    ct ? ct.clippingX(pct) : {};
+}
+
+function ctClippingZ(pct) {
+    const ct = modules.getModule('ct');
+    ct ? ct.clippingZ(pct) : {};
+}
+
 export default {
-    startApp,
+    start,
     setCameraState,
     setModule,
     setScenario,
@@ -65,5 +80,9 @@ export default {
     disableInteraction,
     showStratumLayer,
     hideStratumLayer,
-    setFlowMaterial
+    setFlowMaterial,
+    enableClipping,
+    disableClipping,
+    ctClippingX,
+    ctClippingZ,
 }
