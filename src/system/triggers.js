@@ -13,8 +13,8 @@ const generators = [
     { func: 'monitor_update',      elapsed: 0, interval: 1.40, min: 1.25, max: 1.80 },
 ];
 
-class Triggers {
-    tick = delta => generators.forEach(g => dataGeneratorTick(g, delta));
+const triggers = {
+    tick: delta => generators.forEach(g => dataGeneratorTick(g, delta))
 }
 
 function dataGeneratorTick(generator, delta) {
@@ -33,6 +33,6 @@ function generate(func) {
 }
 
 export default function initTriggers(world) {
-    world.registerUpdatable(new Triggers());
+    world.registerUpdatable(triggers);
 }
 

@@ -9,13 +9,20 @@ let world, interaction;
 
 function start() {
     world = new World();
+
+    // create scene, load resources
     world.init().then(() => startApp());
 }
 
 function startApp() {
+    // start animation loop
     world.start();
-    interaction = initInteraction(world);
+
+    // load first scenario and module
     ui.init();
+
+    // based on scenario objects
+    interaction = initInteraction(world);
 }
 
 function enableInteraction() {

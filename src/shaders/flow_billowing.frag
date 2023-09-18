@@ -8,15 +8,15 @@ varying float vSpeed;
 
 void main() {
     float border = 1. - 2. * abs(vUv.x - 0.5);
-    if (border < 0.55) discard;
+    if (border < 0.45) discard;
 
-    const float nscale = 0.5;
+    const float nscale = 0.9;
     vec2 uv = nscale * (vUv - 0.5);
-    uv.y *= 2.;
-    uv.y -= vSpeed * uTime * 2.0;
+    uv.y *= .3;
+    uv.y -= vSpeed * uTime * .7;
 
     const vec2 period = vec2(0., 0.);
-    float rot = uTime * .5;
+    float rot = uTime * .25;
 
     vec2 gredientSum;
     float warp = 0.13;
@@ -35,7 +35,8 @@ void main() {
         scale *= 2.0;
     }
 
-    noise = 0.5 - 0.4 * noise;
+    noise = 0.5 + 0.4 * noise;
+    noise = pow(noise, 1.5) * .8;
 
 //    noise = pow(noise, 4.) * 1.2;
     gl_FragColor = vec4(vColor, noise);

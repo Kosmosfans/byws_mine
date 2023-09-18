@@ -1,20 +1,19 @@
-import geophone_locations from "../config/geophone_locations.json" assert { type: 'JSON' };
+import geophone_locations from "../config/geophone_locations2.json" assert { type: 'JSON' };
 import seismicMesh from "./seismicMesh";
-import { distance, clamp } from "./utils/utils.js";
 import { Color } from "three";
 
 const cfg = {
     sound_speed: 16,
-    wave_life: 4.0,
-    sensor_thresh: 1.0,
-    sensor_color: { hue: 0.03, sat: 0.9 },
-    sensor_decay: 0.03
+    wave_life: 3.4,
+    sensor_decay: 0.02
 }
 
 let _mesh, waves, sensors, color;
+let stratum;
 
 export default class Seismic {
-    constructor() {
+    constructor(_stratum) {
+        stratum = _stratum;
         init();
     }
 
@@ -26,7 +25,7 @@ export default class Seismic {
 }
 
 function init() {
-    _mesh = seismicMesh();
+    _mesh = seismicMesh(geophone_locations, stratum);
 
     waves = new Set();
     sensors = geophone_locations.map(() => 0);
@@ -37,50 +36,39 @@ function init() {
 
 function animate(delta) {
     waves.forEach(w => updateWave(w, delta));
-
-    sensors.forEach((v, i) => updateSensor(i));
-    _mesh.children[1].instanceColor.needsUpdate = true;
 }
 
-function updateWave(w, delta) {
-    w.elapsed += delta;
-    w.mesh.scale.set(1, 1, 1).multiplyScalar(w.elapsed * cfg.sound_speed);
-    w.mesh.material.opacity = 0.1 * (1 - w.elapsed / cfg.wave_life);
+function updateWave(wave, delta) {
+    wave.elapsed += delta;
+    wave.mesh.scale.set(1, 1, 1).multiplyScalar(wave.elapsed * cfg.sound_speed);
+    wave.mesh.material.opacity = 0.06 * (1 - wave.elapsed / cfg.wave_life);
 
-    if (w.elapsed < cfg.wave_life) return;
+    _mesh.children[2].material.uniforms.uElapsed.value[wave.index] = wave.elapsed;
 
-    waves.delete(w);
-    w.mesh.visible = false;
-}
+    if (wave.elapsed < cfg.wave_life) return;
 
-function updateSensor(i) {
-    const closeWave = Array.from(waves).find(w => isCloseEnough(i, w));
-    setSensorValue(i, closeWave);
-}
+    waves.delete(wave);
+    wave.mesh.visible = false;
 
-function isCloseEnough(sensorIdx, wave) {
-    const sensor = geophone_locations[sensorIdx];
-    const origin = wave.mesh.position;
-    const waveFrontDist = distance(sensor, origin) - wave.elapsed * cfg.sound_speed;
+    _mesh.children[2].material.uniforms.uWavePos.value[wave.index].set(0, 0, 0);
 
-    return Math.abs(waveFrontDist) < cfg.sensor_thresh;
-}
-
-function setSensorValue(i, isActivate) {
-    sensors[i] = isActivate ? 1 : clamp(sensors[i] - cfg.sensor_decay, 0, 1);
-    _mesh.children[1].setColorAt(i, color.setHSL(cfg.sensor_color.hue, cfg.sensor_color.sat, sensors[i] / 2));
 }
 
 function dataDriven() {
     document.addEventListener("seismic_update", e => setupWave(e.detail.data));
 }
 
-function setupWave(location) {
-    const available = _mesh.children[0].children.find(m => !m.visible);
-    if (!available) return;
+function setupWave(pos) {
+    const idleWaveIndex = _mesh.children[0].children.findIndex(m => !m.visible);
+    if (idleWaveIndex === -1) return;
 
-    available.position.copy(location);
-    available.visible = true;
-    waves.add({ 'mesh': available, 'elapsed': 0 });
+    // wave
+    const wave = _mesh.children[0].children[idleWaveIndex];
+    wave.position.copy(pos);
+    wave.visible = true;
+    waves.add({ 'index': idleWaveIndex, 'mesh': wave, 'elapsed': 0 });
+
+    // terrain effect
+    _mesh.children[2].material.uniforms.uWavePos.value[idleWaveIndex].copy(pos);
+    _mesh.children[2].material.uniforms.uElapsed.value[idleWaveIndex] = 0;
 }
-

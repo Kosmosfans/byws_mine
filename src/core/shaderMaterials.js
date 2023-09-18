@@ -33,6 +33,9 @@ import f_jet from "../shaders/jet.frag";
 import f_cloud3d from "../shaders/flow_cloud3d.frag";
 import f_ct from "../shaders/ct.frag";
 
+import v_terrain from "../shaders/terrain.vert";
+import f_terrain from "../shaders/terrain.frag";
+
 export const cloud_material = new ShaderMaterial({
     uniforms: { uTime: { value: 0 } },
     vertexShader: v_flow,
@@ -175,4 +178,15 @@ export const cloud3d_material = new ShaderMaterial({
     transparent: true,
     blending: AdditiveBlending,
     vertexColors: true
+});
+
+export const terrain_material = new ShaderMaterial({
+    uniforms: {
+        uWavePos: { value: [new Vector3(), new Vector3(), new Vector3(), new Vector3(), new Vector3()] },
+        uElapsed: { value: [0, 0, 0, 0, 0] }
+    },
+    vertexShader: v_terrain,
+    fragmentShader: f_terrain,
+    transparent: true,
+    blending: AdditiveBlending,
 });

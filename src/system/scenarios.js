@@ -5,12 +5,6 @@ const scenarios = {
 
 let active;
 
-export default {
-    addMesh,
-    setScenario,
-    getMeshes,
-}
-
 function addMesh(id, mesh) {
     if (!scenarios[id]) return;
     scenarios[id].meshes.push(mesh);
@@ -34,4 +28,10 @@ function close(id, world) {
 
 function getMeshes(id) {
     return scenarios[id].meshes;
+}
+
+export default {
+    addMesh,
+    setScenario,
+    getMeshes,
 }

@@ -29,11 +29,6 @@ const modules = {
     'seismic': { 'loader': initSeismic },
 }
 
-export default {
-    setModule,
-    getModule,
-}
-
 function setModule(id, world) {
     if (!modules[id] || active === id) return;
     if (!modules[id].instance) modules[id].instance = modules[id].loader(world);
@@ -55,4 +50,9 @@ function close(id, world) {
 
 function getModule(id) {
     return modules[id].instance;
+}
+
+export default {
+    setModule,
+    getModule,
 }
